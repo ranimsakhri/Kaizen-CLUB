@@ -137,7 +137,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.createElement('input');
         searchInput.id = 'searchUser';
-        searchInput.type = 'text';
+        searchInput.type = 'text' ;
         searchInput.className = 'form-control mb-3';
         searchInput.placeholder = 'Rechercher un utilisateur...';
         const contentWrapper = document.querySelector('.content-wrapper');
