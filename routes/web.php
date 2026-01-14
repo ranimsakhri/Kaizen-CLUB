@@ -43,6 +43,8 @@ Route::get('/user/dashboard', function () {
     return view('User.dashboard');
 })->name('user.dashboard');
 
+
+
 // -------------------- ADMIN ROUTES --------------------
 // Activité Sportive
 Route::resource('activiteSportif', ActiviteSportifController::class);
