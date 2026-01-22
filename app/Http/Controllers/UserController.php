@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        // Obliger l’authentification
+        // Obliger l’authentification pour toutes les méthodes
         $this->middleware('auth');
     }
 
@@ -63,6 +63,7 @@ class UserController extends Controller
     }
 
     /**
+     * SHOW
      * ADMIN ➜ voir tous
      * USER ➜ voir seulement son profil
      */
@@ -70,52 +71,72 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
+        // Si l'utilisateur n'est pas admin et ce n'est pas son propre profil → 403
         if (Auth::user()->role !== 'admin' && Auth::id() != $user->id) {
-            abort(403);
+            abort(403, 'Accès refusé');
         }
 
         return view('User.show', compact('user'));
     }
 
     /**
-     * ADMIN ONLY
+     * EDIT
+     * ADMIN ➜ modifier tous
+     * USER ➜ modifier seulement son profil
      */
     public function edit(string $id)
     {
-        abort_if(Auth::user()->role !== 'admin', 403);
-
         $user = User::findOrFail($id);
+
+        if (Auth::user()->role !== 'admin' && Auth::id() != $user->id) {
+            abort(403, 'Accès refusé');
+        }
+
         return view('User.edit', compact('user'));
     }
 
     /**
-     * ADMIN ONLY
+     * UPDATE
+     * ADMIN ➜ modifier tous
+     * USER ➜ modifier seulement son profil
      */
     public function update(Request $request, string $id)
     {
-        abort_if(Auth::user()->role !== 'admin', 403);
+        $user = User::findOrFail($id);
 
-        $request->validate([
+        if (Auth::user()->role !== 'admin' && Auth::id() != $user->id) {
+            abort(403, 'Accès refusé');
+        }
+
+        $rules = [
             'name'  => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
-        ]);
+        ];
 
-        $user = User::findOrFail($id);
+        if ($request->filled('password')) {
+            $rules['password'] = 'string|min:6';
+        }
+
+        $request->validate($rules);
 
         $user->name  = $request->name;
         $user->email = $request->email;
 
         if ($request->filled('password')) {
-            $request->validate([
-                'password' => 'string|min:6',
-            ]);
             $user->password = Hash::make($request->password);
         }
 
         $user->save();
 
-        return redirect()->route('users.index')
-            ->with('success', 'Utilisateur modifié avec succès');
+        // Si c'est admin → redirige vers liste utilisateurs
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('users.index')
+                ->with('success', 'Utilisateur modifié avec succès');
+        }
+
+        // Si c'est un utilisateur normal → redirige vers son profil
+        return redirect()->route('users.show', $user->id)
+            ->with('success', 'Profil modifié avec succès');
     }
 
     /**

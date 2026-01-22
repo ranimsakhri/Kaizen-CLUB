@@ -3,154 +3,184 @@
 @section('title', 'Kaizen Club - Bienvenue')
 
 @section('content')
-<!-- Hero Section -->
-<div class="hero-section py-5 text-center" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
-    <div class="container">
-        <h1 class="animate__animated animate__fadeInDown">Bienvenue au Kaizen Club</h1>
-        <p class="animate__animated animate__fadeInUp animate__delay-1s">Votre destination pour l'excellence sportive et le bien-être</p>
-        <a href="{{ route('activiteSportif.index') }}" class="btn btn-light btn-lg mt-3 animate__animated animate__zoomIn animate__delay-2s">Découvrir nos activités</a>
-    </div>
-</div>
 
-<!-- Activités Section -->
-<div class="container mb-5">
-    <div class="row g-4">
+<!-- ================= HERO ================= -->
+<section class="hero-kaizen">
 
-        <!-- Activités Sportives -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card-activity h-100 shadow-sm border-0 hover-animate">
-                <div class="card-icon">
-                    <i class="fas fa-running fa-2x"></i>
-                </div>
-                <div class="card-body text-center">
-                    <h5>Activités Sportives</h5>
-                    <p>Découvrez notre large gamme d'activités : équitation, natation, danse, fitness et plus encore.</p>
-                    <a href="{{ route('activiteSportif.index') }}" class="btn btn-primary-custom btn-custom">Explorer</a>
-                </div>
-            </div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content text-center">
+
+        <!-- LOGO SVG CHEVAL + K -->
+        <div class="logo-kaizen" data-aos="zoom-in">
+            <svg viewBox="0 0 200 200" class="horse-svg">
+                <path d="M100 20
+                         C70 40, 50 80, 55 120
+                         C60 155, 95 175, 100 180
+                         C105 175, 140 155, 145 120
+                         C150 80, 130 40, 100 20Z"/>
+                <text x="100" y="125" text-anchor="middle" class="letter-k">K</text>
+            </svg>
         </div>
 
-        <!-- Horaires -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card-activity h-100 shadow-sm border-0 hover-animate">
-                <div class="card-icon">
-                    <i class="fas fa-clock fa-2x"></i>
-                </div>
-                <div class="card-body text-center">
-                    <h5>Horaires</h5>
-                    <p>Consultez les horaires de toutes nos activités et planifiez votre semaine sportive.</p>
-                    <a href="{{ route('horaire.index') }}" class="btn btn-primary-custom btn-custom">Voir Horaires</a>
-                </div>
-            </div>
-        </div>
+        <h1 class="hero-title" data-aos="fade-up">Kaizen Club</h1>
 
-        <!-- Café -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card-activity h-100 shadow-sm border-0 hover-animate">
-                <div class="card-icon">
-                    <i class="fas fa-coffee fa-2x"></i>
-                </div>
-                <div class="card-body text-center">
-                    <h5>Café Intégré</h5>
-                    <p>Détendez-vous dans notre café avec des boissons saines et des en-cas nutritifs.</p>
-                    <a href="{{ route('produit.index') }}" class="btn btn-primary-custom btn-custom">Notre Menu</a>
-                </div>
-            </div>
-        </div>
+        <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+            Grandir • Apprendre • Progresser
+        </p>
 
-        <!-- Réservations -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card-activity h-100 shadow-sm border-0 hover-animate">
-                <div class="card-icon">
-                    <i class="fas fa-calendar-check fa-2x"></i>
-                </div>
-                <div class="card-body text-center">
-                    <h5>Réservations</h5>
-                    <p>Réservez votre place pour vos activités préférées en quelques clics.</p>
-                    <a href="{{ route('Reservation.index') }}" class="btn btn-primary-custom btn-custom">Réserver</a>
-                </div>
-            </div>
-        </div>
+        <p class="hero-text" data-aos="fade-up" data-aos-delay="400">
+            Un club jeune et moderne inspiré par l’esprit du cheval :
+            discipline, confiance et amélioration continue.
+        </p>
 
-        <!-- Commandes -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card-activity h-100 shadow-sm border-0 hover-animate">
-                <div class="card-icon">
-                    <i class="fas fa-shopping-cart fa-2x"></i>
-                </div>
-                <div class="card-body text-center">
-                    <h5>Commandes Café</h5>
-                    <p>Passez vos commandes au café et profitez de nos produits de qualité.</p>
-                    <a href="{{ route('commandes.index') }}" class="btn btn-primary-custom btn-custom">Commander</a>
-                </div>
-            </div>
-        </div>
+        <div class="hero-buttons" data-aos="zoom-in" data-aos-delay="600">
+            <a href="{{ route('login') }}" class="btn btn-outline-light btn-lg me-3">
+                <i class="fas fa-sign-in-alt me-2"></i> Login
+            </a>
+            <a href="{{ route('club.decouvrir') }}" class="btn btn-gold btn-lg">
+    Découvrir le club
+</a>
 
-        <!-- Gestion Membres -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card-activity h-100 shadow-sm border-0 hover-animate">
-                <div class="card-icon">
-                    <i class="fas fa-users-cog fa-2x"></i>
-                </div>
-                <div class="card-body text-center">
-                    <h5>Gestion Membres</h5>
-                    <p>Administrez les membres et leurs accès au club.</p>
-                    <a href="{{ route('users.index') }}" class="btn btn-primary-custom btn-custom">Gérer</a>
-                </div>
-            </div>
         </div>
 
     </div>
-</div>
+</section>
 
-<!-- Section Pourquoi Kaizen -->
-<div class="container mb-5">
-    <div class="content-wrapper">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold animate__animated animate__fadeInDown">Pourquoi choisir Kaizen Club ?</h2>
-            <p class="text-muted animate__animated animate__fadeInUp animate__delay-1s">L'amélioration continue au cœur de notre philosophie</p>
-        </div>
-
-        <div class="row g-4">
-            <div class="col-md-4 text-center animate__animated animate__fadeInLeft">
-                <div class="mb-3">
-                    <i class="fas fa-trophy fa-3x"></i>
-                </div>
-                <h5 class="fw-bold">Équipements Professionnels</h5>
-                <p class="text-muted">Des installations modernes et un équipement de qualité professionnelle</p>
-            </div>
-
-            <div class="col-md-4 text-center animate__animated animate__fadeInUp animate__delay-1s">
-                <div class="mb-3">
-                    <i class="fas fa-user-friends fa-3x"></i>
-                </div>
-                <h5 class="fw-bold">Coachs Certifiés</h5>
-                <p class="text-muted">Une équipe de professionnels passionnés pour vous accompagner</p>
-            </div>
-
-            <div class="col-md-4 text-center animate__animated animate__fadeInRight animate__delay-2s">
-                <div class="mb-3">
-                    <i class="fas fa-heart fa-3x"></i>
-                </div>
-                <h5 class="fw-bold">Communauté Bienveillante</h5>
-                <p class="text-muted">Rejoignez une communauté motivante et solidaire</p>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
+{{-- ================= STYLES ================= --}}
 @section('styles')
 <style>
-.card-activity {
-    border-radius: 15px;
-    transition: transform 0.3s, box-shadow 0.3s;
+
+/* ================= HERO ================= */
+.hero-kaizen {
+    position: relative;
+    height: 100vh;
+    background: linear-gradient(
+        135deg,
+        #2b1d14,
+        #5a3d8a,
+        #2b1d14
+    );
+    background-size: 300% 300%;
+    animation: gradientMove 12s ease infinite;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
 }
-.hover-animate:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+
+/* ANIMATION DU GRADIENT */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
+
+/* OVERLAY */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1;
+}
+
+/* CONTENT */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* SVG LOGO */
+.horse-svg {
+    width: 160px;
+    height: 160px;
+    fill: none;
+    stroke: #d4af37;
+    stroke-width: 4;
+    animation: draw 3s ease forwards;
+}
+
+@keyframes draw {
+    from {
+        stroke-dasharray: 600;
+        stroke-dashoffset: 600;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* LETTRE K */
+.letter-k {
+    fill: #d4af37;
+    font-size: 64px;
+    font-weight: 800;
+}
+
+/* TEXT */
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-top: 20px;
+}
+
+.hero-subtitle {
+    color: #d4af37;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+
+.hero-text {
+    max-width: 600px;
+    margin-top: 15px;
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+/* BUTTONS */
+.btn-gold {
+    background: linear-gradient(135deg, #d4af37, #f5d76e);
+    color: #2b1d14;
+    border-radius: 30px;
+    padding: 12px 32px;
+    font-weight: 600;
+    border: none;
+}
+
+.btn-gold:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(212,175,55,0.5);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.4rem;
+    }
+}
+
 </style>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+@endsection
+
+{{-- ================= SCRIPTS ================= --}}
+@section('scripts')
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1200,
+        once: true
+    });
+</script>
 @endsection

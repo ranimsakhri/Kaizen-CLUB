@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');      // Name of the item or customer
-            $table->decimal('prix', 10, 2); // Price with 2 decimal places
+            $table->string('nom')->nullable();
+$table->decimal('prix', 10, 2)->nullable();
+
             $table->decimal('total', 10, 2); // Total with 2 decimal places
             $table->timestamps();
         });

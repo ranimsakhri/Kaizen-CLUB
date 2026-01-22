@@ -10,27 +10,37 @@ use Illuminate\Support\Facades\Auth;
 
 class CommandeController extends Controller
 {
+    // Affiche toutes les commandes selon le rôle
     public function index()
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        if ($user->role === 'admin') {
-            $commandes = Commande::all();
-        } else {
-            $commandes = Commande::where('user_id', $user->id)->get();
-        }
-
-        return view('Commande.index', compact('commandes'));
+    if ($user->role === 'admin') {
+        // L'admin voit toutes les commandes
+        $commandes = Commande::with('user')->get();
+    } else {
+        // L'utilisateur normal ne voit que ses commandes
+        $commandes = Commande::with('user')
+                              ->where('user_id', $user->id)
+                              ->get();
     }
 
-    public function create()
-    {
-        $produits = Produit::with('categorie')->get();
-        $categories = Categorie::all();
+    return view('Commande.index', compact('commandes', 'user'));
+}
 
-        return view('Commande.create', compact('produits', 'categories'));
-    }
 
+    // Formulaire pour passer une commande depuis un produit
+ public function create($produitId = null)
+{
+    $produits = Produit::all(); // récupérer tous les produits
+    $categories = Categorie::all(); // récupérer toutes les catégories
+
+    return view('Commande.create', compact('produits', 'categories'));
+}
+
+
+
+    // Enregistrer une nouvelle commande
     public function store(Request $request)
     {
         $request->validate([
@@ -70,7 +80,7 @@ class CommandeController extends Controller
             'user_id' => Auth::id(),
             'total' => $total,
             'details' => json_encode($produitsSelectionnes),
-            'statut' => 'En attente',
+            'statut' => 'en attente',
             'livraison' => $livraison,
             'adresse' => $adresse,
         ]);
@@ -79,12 +89,13 @@ class CommandeController extends Controller
                          ->with('success', 'Commande ajoutée avec succès !');
     }
 
+    // Affiche une commande spécifique
     public function show($id)
     {
         $commande = Commande::findOrFail($id);
 
         if (Auth::user()->role !== 'admin' && Auth::id() !== $commande->user_id) {
-            abort(403);
+            abort(403, 'Accès refusé');
         }
 
         $produits = is_string($commande->details) ? json_decode($commande->details, true) : $commande->details;
@@ -92,6 +103,7 @@ class CommandeController extends Controller
         return view('Commande.show', compact('commande', 'produits'));
     }
 
+    // Formulaire pour modifier une commande (admin seulement)
     public function edit($id)
     {
         $commande = Commande::findOrFail($id);
@@ -103,6 +115,7 @@ class CommandeController extends Controller
         return view('Commande.edit', compact('commande'));
     }
 
+    // Mettre à jour une commande (statut seulement)
     public function update(Request $request, $id)
     {
         $commande = Commande::findOrFail($id);
@@ -112,20 +125,18 @@ class CommandeController extends Controller
         }
 
         $request->validate([
-            'statut' => 'required|string|in:En attente,Confirmée,Livrée,Annulée',
+            'statut' => 'required|string|in:en attente,confirmée,livrée,annulée',
         ]);
-
-        $total = $request->has('total') ? floatval($request->total) : $commande->total;
 
         $commande->update([
             'statut' => $request->statut,
-            'total' => $total,
         ]);
 
         return redirect()->route('commandes.show', $commande->id)
                          ->with('success', 'Commande mise à jour avec succès');
     }
 
+    // Supprimer une commande (admin seulement)
     public function destroy($id)
     {
         $commande = Commande::findOrFail($id);

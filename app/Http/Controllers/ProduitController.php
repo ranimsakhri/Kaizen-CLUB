@@ -28,7 +28,7 @@ class ProduitController extends Controller
         $this->authorizeAdmin();
 
         // Charger toutes les catégories pour le select
-        $categories = Categorie::all();
+        $categories = Categorie::orderBy('nom')->get();
 
         return view('Produit.create', compact('categories'));
     }
@@ -42,7 +42,11 @@ class ProduitController extends Controller
 
         $this->validateProduit($request);
 
-        Produit::create($request->only('nom', 'prix', 'categorie_id'));
+        Produit::create([
+            'nom'          => $request->nom,
+            'prix'         => $request->prix,
+            'categorie_id' => $request->categorie_id,
+        ]);
 
         return redirect()
             ->route('produit.index')
@@ -50,25 +54,24 @@ class ProduitController extends Controller
     }
 
     /**
-     * Détails produit (ADMIN + USER)
+     * Détails d’un produit (ADMIN + USER)
      */
     public function show($id)
     {
-        // Charger le produit avec sa catégorie
         $produit = Produit::with('categorie')->findOrFail($id);
 
         return view('Produit.show', compact('produit'));
     }
 
     /**
-     * Formulaire édition (ADMIN SEULEMENT)
+     * Formulaire de modification (ADMIN SEULEMENT)
      */
     public function edit($id)
     {
         $this->authorizeAdmin();
 
         $produit = Produit::findOrFail($id);
-        $categories = Categorie::all();
+        $categories = Categorie::orderBy('nom')->get();
 
         return view('Produit.edit', compact('produit', 'categories'));
     }
@@ -83,7 +86,11 @@ class ProduitController extends Controller
         $this->validateProduit($request);
 
         $produit = Produit::findOrFail($id);
-        $produit->update($request->only('nom', 'prix', 'categorie_id'));
+        $produit->update([
+            'nom'          => $request->nom,
+            'prix'         => $request->prix,
+            'categorie_id' => $request->categorie_id,
+        ]);
 
         return redirect()
             ->route('produit.index')
@@ -97,7 +104,8 @@ class ProduitController extends Controller
     {
         $this->authorizeAdmin();
 
-        Produit::findOrFail($id)->delete();
+        $produit = Produit::findOrFail($id);
+        $produit->delete();
 
         return redirect()
             ->route('produit.index')
@@ -107,7 +115,7 @@ class ProduitController extends Controller
     /**
      * Vérification ADMIN
      */
-    private function authorizeAdmin()
+    private function authorizeAdmin(): void
     {
         if (!Auth::check() || Auth::user()->role !== 'admin') {
             abort(403, 'Accès refusé');
@@ -115,14 +123,14 @@ class ProduitController extends Controller
     }
 
     /**
-     * Validation des produits
+     * Validation des données produit
      */
-    private function validateProduit(Request $request)
+    private function validateProduit(Request $request): void
     {
         $request->validate([
             'nom'          => 'required|string|max:255',
             'prix'         => 'required|numeric|min:0',
-            'categorie_id' => 'required|exists:categories,id', // obligatoire pour le menu
+            'categorie_id' => 'required|exists:categories,id',
         ]);
     }
 }

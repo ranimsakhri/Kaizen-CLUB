@@ -3,161 +3,180 @@
 @section('title', 'Utilisateurs - Kaizen Club')
 
 @section('content')
-<div class="container my-5">
-    <div class="content-wrapper">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="fw-bold" style="color: var(--primary);">
-                    <i class="fas fa-users me-2"></i>Nos Utilisateurs
-                </h2>
-                <p class="text-muted mb-0">Gérez tous les utilisateurs de la plateforme</p>
-            </div>
 
-            @auth
-                @if(auth()->user()->role === 'admin')
-                    <a href="{{ route('users.create') }}" class="btn btn-primary">
-                        + Ajouter un utilisateur
-                    </a>
-                @endif
-            @endauth
+@auth
+    @if(auth()->user()->role === 'admin')
+        <!-- ================= HERO ADMIN ================= -->
+        <section class="activities-hero">
+            <div class="container py-5 text-center">
+                <h2 class="activities-title" data-aos="fade-down">
+                    <i class="fas fa-users me-2"></i>Gestion des Utilisateurs
+                </h2>
+                <p class="activities-subtitle" data-aos="fade-up">
+                    Administrateur – Consultez, modifiez ou supprimez des utilisateurs
+                </p>
+
+                <a href="{{ route('users.create') }}" class="btn btn-gold btn-lg mt-4" data-aos="fade-up">
+                    + Ajouter un utilisateur
+                </a>
+            </div>
+        </section>
+
+        <div class="container my-5">
+            @if($users->isEmpty())
+                <div class="text-center py-5">
+                    <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+                    <h4 class="text-muted">Aucun utilisateur trouvé</h4>
+                    <p class="text-muted">Commencez par ajouter votre premier utilisateur</p>
+                </div>
+            @else
+                <!-- Tableau Admin -->
+                <div class="table-responsive">
+                    <table class="table table-hover table-users">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Rôle</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($users as $user)
+                            <tr>
+                                <td class="fw-bold">{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>
+                                    <span class="badge" style="background: {{ $user->role=='admin'?'#d4af37':'#3b82f6' }}; color:white;">
+                                        {{ ucfirst($user->role) }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-outline-dashboard">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-gold">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Confirmer la suppression ?')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
         </div>
 
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    @else
+        <!-- ================= HERO USER ================= -->
+        <section class="reservation-hero position-relative mb-5">
+            <div class="hero-overlay"></div>
+            <div class="container text-center hero-content py-5" data-aos="fade-up">
+                <div class="hero-icon dynamic-icon mb-3">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h1 class="hero-title mb-2">Mon Profil</h1>
+                <p class="hero-subtitle">Bienvenue dans votre espace utilisateur Kaizen Club</p>
             </div>
-        @endif
+        </section>
 
-        @if($users->isEmpty())
-            <div class="text-center py-5">
-                <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
-                <h4 class="text-muted">Aucun utilisateur trouvé</h4>
-                <p class="text-muted">Commencez par ajouter votre premier utilisateur</p>
-            </div>
-        @else
-            <!-- Vue en cartes -->
-            <div class="row g-4 mb-4" id="usersCards">
-                @foreach($users as $user)
-                <div class="col-md-6 col-lg-4 user-card" data-nom="{{ strtolower($user->name) }}" data-role="{{ $user->role }}">
-                    <div class="card-activity h-100 text-center">
-                        <div class="card-icon">
-                            <i class="fas fa-user"></i>
-                        </div>
+        <div class="container my-5">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card-activity h-100 text-center shadow-sm">
+                        <div class="card-icon mb-3"><i class="fas fa-user-circle"></i></div>
                         <div class="card-body">
-                            <h5 class="fw-bold">{{ $user->name }}</h5>
-                            <span class="badge badge-custom"
-                                  style="background: {{ $user->role == 'admin' ? '#f59e0b' : '#3b82f6' }}; color: white;">
-                                {{ ucfirst($user->role) }}
-                            </span>
-
-                            <div class="mt-3">
-                                <p class="text-muted mb-1"><i class="fas fa-envelope me-1"></i>{{ $user->email }}</p>
+                            <h5 class="fw-bold">{{ auth()->user()->name }}</h5>
+                            <span class="badge" style="background:#3b82f6; color:white;">Utilisateur</span>
+                            <p class="text-muted mt-2 mb-0"><i class="fas fa-envelope me-1"></i>{{ auth()->user()->email }}</p>
+                            <div class="d-flex gap-2 justify-content-center mt-3">
+                                <a href="{{ route('users.show', auth()->id()) }}" class="btn btn-outline-info"><i class="fas fa-eye"></i> Voir</a>
+                                <a href="{{ route('users.edit', auth()->id()) }}" class="btn btn-outline-gold"><i class="fas fa-edit"></i> Modifier</a>
                             </div>
-
-                            @if(auth()->user()->role === 'admin')
-                            <div class="d-flex gap-2 justify-content-center mt-3 flex-wrap">
-                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-outline-warning" title="Modifier">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-outline-info" title="Voir">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?')" title="Supprimer">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                            @endif
-
                         </div>
                     </div>
                 </div>
-                @endforeach
             </div>
+        </div>
+    @endif
+@endauth
 
-            <!-- Vue tableau pour admin uniquement -->
-            @if(auth()->user()->role === 'admin')
-            <div class="table-responsive mt-5">
-                <h4 class="mb-3">Vue Administrative</h4>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Email</th>
-                            <th>Rôle</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($users as $user)
-                        <tr>
-                            <td class="fw-bold">{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>
-                                <span class="badge" style="background: {{ $user->role == 'admin' ? '#f59e0b' : '#3b82f6' }}; color: white;">
-                                    {{ ucfirst($user->role) }}
-                                </span>
-                            </td>
-                            <td>
-                                <div class="btn-group btn-group-sm flex-wrap">
-                                    <a href="{{ route('users.show', $user->id) }}" class="btn btn-info" title="Voir">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning" title="Modifier">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Confirmer la suppression ?')" title="Supprimer">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            @endif
+@endsection
 
-        @endif
-    </div>
-</div>
+@section('styles')
+<style>
+/* ================= HERO ADMIN & GRADIENT ================== */
+.activities-hero {
+    min-height: 30vh;
+    padding: 60px 0;
+    background: linear-gradient(135deg, #f8fafc, #fff7e6, #fef9e0);
+    background-size: 600% 600%;
+    animation: gradientBG 15s ease infinite;
+    text-align: center;
+}
+@keyframes gradientBG {
+    0% { background-position:0% 50%; }
+    50% { background-position:100% 50%; }
+    100% { background-position:0% 50%; }
+}
+
+.activities-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #111827;
+}
+.activities-subtitle {
+    font-size: 1rem;
+    color: #9ca3af;
+    margin-top: 6px;
+}
+
+/* TABLEAU ADMIN */
+.table-users {
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+.table-users thead { background:#111827; color:#d4af37; text-transform:uppercase; font-size:0.85rem; }
+.table-users tbody tr:hover { background: rgba(212,175,55,0.08); }
+
+/* BOUTONS */
+.btn-gold {
+    background: linear-gradient(135deg,#d4af37,#f5d76e);
+    color:#111827;
+    border-radius:30px;
+    font-weight:600;
+}
+.btn-outline-dashboard {
+    color:#111827;
+    border:1px solid #d4af37;
+    border-radius:30px;
+}
+.btn-outline-dashboard:hover { background: rgba(212,175,55,0.1); }
+.btn-outline-danger { border-radius:30px; border:1px solid #ef4444; color:#ef4444; }
+.btn-outline-danger:hover { background: rgba(239,68,68,0.1); }
+
+/* RESPONSIVE */
+@media (max-width:768px) {
+    .activities-title { font-size:2rem; }
+}
+</style>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 @endsection
 
 @section('scripts')
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    // Recherche dynamique par nom et rôle
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.createElement('input');
-        searchInput.id = 'searchUser';
-        searchInput.type = 'text' ;
-        searchInput.className = 'form-control mb-3';
-        searchInput.placeholder = 'Rechercher un utilisateur...';
-        const contentWrapper = document.querySelector('.content-wrapper');
-        contentWrapper.insertBefore(searchInput, contentWrapper.firstChild);
-
-        searchInput.addEventListener('keyup', filterUsers);
-
-        function filterUsers() {
-            const searchValue = searchInput.value.toLowerCase();
-            const cards = document.querySelectorAll('.user-card');
-            cards.forEach(card => {
-                const nom = card.getAttribute('data-nom');
-                const role = card.getAttribute('data-role');
-                if (nom.includes(searchValue) || role.includes(searchValue)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    });
+    AOS.init({ duration:1200, once:true });
 </script>
 @endsection

@@ -8,13 +8,17 @@ use Illuminate\Support\Facades\Auth;
 
 class IsAdmin
 {
+    /**
+     * Gérer une requête entrante.
+     */
     public function handle(Request $request, Closure $next)
     {
-        // Supposons que ta table users a une colonne 'is_admin' (boolean)
-        if (Auth::check() && Auth::user()->is_admin) {
+        // Vérifie si l'utilisateur est connecté ET a le rôle 'admin'
+        if (Auth::check() && Auth::user()->role === 'admin') {
             return $next($request);
         }
 
-        abort(403, 'Accès interdit');
+        // Sinon, interdit l'accès
+        abort(403, 'Accès refusé');
     }
 }

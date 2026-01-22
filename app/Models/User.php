@@ -2,33 +2,30 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Les attributs assignables en masse
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
-    'name',
-    'email',
-    'password',
-    'role',
-];
-
+        'name',
+        'email',
+        'password',
+        'role',
+    ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Les attributs cachés pour la sérialisation
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -36,7 +33,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Les casts d'attributs
      *
      * @return array<string, string>
      */
@@ -46,5 +43,23 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Accessor pour savoir si l'utilisateur est admin
+     *
+     * @return bool
+     */
+    public function getIsAdminAttribute(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Relation avec les réservations
+     */
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
     }
 }

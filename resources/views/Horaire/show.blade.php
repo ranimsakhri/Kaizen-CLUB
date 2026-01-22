@@ -9,7 +9,7 @@
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Accueil</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('Horaire.index') }}">Horaires</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('horaire.index') }}">Horaires</a></li>
                 <li class="breadcrumb-item active">Horaire du {{ $horaire->date->format('d/m/Y') }}</li>
             </ol>
         </nav>
@@ -31,17 +31,17 @@
                     </p>
 
                     <div class="d-flex gap-2 justify-content-center mt-4">
-                        <a href="{{ route('Horaire.edit', $horaire->id) }}" class="btn btn-warning btn-custom">
+                        <a href="{{ route('horaire.edit', $horaire->id) }}" class="btn btn-warning btn-custom">
                             <i class="fas fa-edit me-2"></i>Modifier
                         </a>
-                        <form action="{{ route('Horaire.destroy', $horaire->id) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cet horaire ?');">
+                        <form action="{{ route('horaire.destroy', $horaire->id) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cet horaire ?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-custom">
                                 <i class="fas fa-trash me-2"></i>Supprimer
                             </button>
                         </form>
-                        <a href="{{ route('Horaire.index') }}" class="btn btn-outline-secondary btn-custom">
+                        <a href="{{ route('horaire.index') }}" class="btn btn-outline-secondary btn-custom">
                             <i class="fas fa-arrow-left me-2"></i>Retour
                         </a>
                     </div>

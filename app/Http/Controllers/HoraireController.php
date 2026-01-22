@@ -3,119 +3,94 @@
 namespace App\Http\Controllers;
 
 use App\Models\Horaire;
+use App\Models\ActiviteSportif;
 use Illuminate\Http\Request;
 
 class HoraireController extends Controller
 {
+    public function __construct()
+    {
+        // Obliger l'authentification
+        $this->middleware('auth');
+
+        // Seuls les admins peuvent créer, éditer ou supprimer un horaire
+        $this->middleware('is_admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
+    }
+
     /**
-     * Display a listing of the resource.
+     * Affiche la liste des horaires par activité
      */
     public function index()
     {
-        // Récupérer tous les horaires
-        $horaires = Horaire::all();
+        // Récupérer toutes les activités avec leurs horaires
+        $activites = ActiviteSportif::with('horaires')->get();
 
-        // Afficher la liste
-        return view('Horaire.index', compact('horaires'));
+        return view('Horaire.index', compact('activites'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Formulaire création d'un horaire
      */
-    public function create()
+    public function create(ActiviteSportif $activiteSportif)
     {
-        // Afficher le formulaire d'ajout
-        return view('Horaire.create');
+        return view('Horaire.create', compact('activiteSportif'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Enregistrement d'un nouvel horaire
      */
     public function store(Request $request)
     {
-        // Validation des données
+        // Validation
         $request->validate([
+            'activite_sportif_id' => 'required|exists:activite_sportifs,id',
             'date' => 'required|date',
-            'heure_debut' => 'required',
-            'heure_fin' => 'required|after:heure_debut',
+            'heure_debut' => 'required|date_format:H:i',
+            'heure_fin' => 'required|date_format:H:i|after:heure_debut',
         ]);
 
-        // Enregistrer l'horaire
-        Horaire::create([
-            'date' => $request->date,
-            'heure_debut' => $request->heure_debut,
-            'heure_fin' => $request->heure_fin,
-        ]);
+        // Création de l'horaire
+        Horaire::create($request->only('activite_sportif_id', 'date', 'heure_debut', 'heure_fin'));
 
-        // Redirection
-        return redirect()->route('horaires.index')
+        return redirect()->route('activiteSportif.show', $request->activite_sportif_id)
             ->with('success', 'Horaire ajouté avec succès');
     }
 
     /**
-     * Display the specified resource.
+     * Formulaire édition d'un horaire
      */
-    public function show(string $id)
+    public function edit(Horaire $horaire)
     {
-        // Récupérer un horaire par ID
-        $horaire = Horaire::findOrFail($id);
-
-        // Afficher les détails
-        return view('Horaire.show', compact('horaire'));
+        $activiteSportif = $horaire->activiteSportif;
+        return view('Horaire.edit', compact('horaire', 'activiteSportif'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Mise à jour d'un horaire
      */
-    public function edit(string $id)
+    public function update(Request $request, Horaire $horaire)
     {
-        // Récupérer l'horaire à modifier
-        $horaire = Horaire::findOrFail($id);
-
-        // Afficher le formulaire de modification
-        return view('Horaire.edit', compact('horaire'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        // Validation
         $request->validate([
             'date' => 'required|date',
-            'heure_debut' => 'required',
-            'heure_fin' => 'required|after:heure_debut',
+            'heure_debut' => 'required|date_format:H:i',
+            'heure_fin' => 'required|date_format:H:i|after:heure_debut',
         ]);
 
-        // Récupérer l'horaire
-        $horaire = Horaire::findOrFail($id);
+        $horaire->update($request->only('date', 'heure_debut', 'heure_fin'));
 
-        // Mise à jour
-        $horaire->update([
-            'date' => $request->date,
-            'heure_debut' => $request->heure_debut,
-            'heure_fin' => $request->heure_fin,
-        ]);
-
-        // Redirection
-        return redirect()->route('Horaire.index')
+        return redirect()->route('activiteSportif.show', $horaire->activite_sportif_id)
             ->with('success', 'Horaire modifié avec succès');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Suppression d'un horaire
      */
-    public function destroy(string $id)
+    public function destroy(Horaire $horaire)
     {
-        // Récupérer l'horaire
-        $horaire = Horaire::findOrFail($id);
-
-        // Suppression
+        $activiteId = $horaire->activite_sportif_id;
         $horaire->delete();
 
-        // Redirection
-        return redirect()->route('Horaire.index')
+        return redirect()->route('activiteSportif.show', $activiteId)
             ->with('success', 'Horaire supprimé avec succès');
     }
 }

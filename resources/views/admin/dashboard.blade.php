@@ -3,87 +3,142 @@
 @section('title', 'Dashboard Admin - Kaizen Club')
 
 @section('content')
-<div class="container my-5">
-    <div class="content-wrapper">
+<section class="dashboard-hero">
+    <div class="container py-5 text-center">
+        <h1 class="dashboard-title mb-2" data-aos="fade-down"><i class="fas fa-user-shield me-2"></i>Dashboard Admin</h1>
+        <p class="dashboard-subtitle mb-5" data-aos="fade-up" data-aos-delay="200">Gestion complète du club Kaizen</p>
 
-        <!-- Titre -->
-        <div class="mb-4">
-            <h2 class="fw-bold">
-                <i class="fas fa-user-shield me-2"></i>Dashboard Admin
-            </h2>
-            <p class="text-muted mb-0">Gestion complète du club Kaizen</p>
-        </div>
+        <div class="row g-4">
+            <!-- Cartes -->
+            @php
+            $cards = [
+                ['route'=>'activiteSportif.index','icon'=>'dumbbell','title'=>'Activités Sportives','desc'=>'Ajouter, modifier ou supprimer des activités.'],
+                ['route'=>'horaire.index','icon'=>'clock','title'=>'Horaires','desc'=>'Gérer les horaires des activités et réservations.'],
+                ['route'=>'produit.index','icon'=>'coffee','title'=>'Produits / Café','desc'=>'Modifier le menu et les prix.'],
+                ['route'=>'Reservation.index','icon'=>'calendar-check','title'=>'Réservations','desc'=>'Voir, valider ou supprimer les réservations des membres.'],
+                ['route'=>'users.index','icon'=>'users','title'=>'Utilisateurs','desc'=>'Gérer les comptes des utilisateurs.'],
+                ['route'=>'commandes.index','icon'=>'shopping-cart','title'=>'Commandes','desc'=>'Suivi et gestion des commandes du café.'],
+            ];
+            @endphp
 
-        <!-- Menu de navigation -->
-        <div class="row g-4 mt-4">
-
-            <!-- Activités sportives -->
-            <div class="col-md-4">
-                <a href="{{ route('activiteSportif.index') }}" class="card text-decoration-none text-dark h-100 shadow-sm">
-                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                        <i class="fas fa-dumbbell fa-3x mb-3 text-primary"></i>
-                        <h5 class="card-title">Activités Sportives</h5>
-                        <p class="card-text text-center">Ajouter, modifier ou supprimer des activités.</p>
-                    </div>
+            @foreach($cards as $index => $card)
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="{{ $index * 150 }}">
+                <a href="{{ route($card['route']) }}" class="card-dashboard h-100">
+                    <i class="fas fa-{{ $card['icon'] }} fa-3x mb-3"></i>
+                    <h5>{{ $card['title'] }}</h5>
+                    <p>{{ $card['desc'] }}</p>
                 </a>
             </div>
-
-            <!-- Horaires -->
-            <div class="col-md-4">
-                <a href="{{ route('horaire.index') }}" class="card text-decoration-none text-dark h-100 shadow-sm">
-                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                        <i class="fas fa-clock fa-3x mb-3 text-primary"></i>
-                        <h5 class="card-title">Horaires</h5>
-                        <p class="card-text text-center">Gérer les horaires des activités et réservations.</p>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Produits / Café -->
-            <div class="col-md-4">
-                <a href="{{ route('produit.index') }}" class="card text-decoration-none text-dark h-100 shadow-sm">
-                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                        <i class="fas fa-coffee fa-3x mb-3 text-primary"></i>
-                        <h5 class="card-title">Produits / Café</h5>
-                        <p class="card-text text-center">Modifier le menu et les prix.</p>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Réservations -->
-            <div class="col-md-4">
-                <a href="{{ route('Reservation.index') }}" class="card text-decoration-none text-dark h-100 shadow-sm">
-                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                        <i class="fas fa-calendar-check fa-3x mb-3 text-primary"></i>
-                        <h5 class="card-title">Réservations</h5>
-                        <p class="card-text text-center">Voir, valider ou supprimer les réservations des membres.</p>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Utilisateurs -->
-            <div class="col-md-4">
-                <a href="{{ route('users.index') }}" class="card text-decoration-none text-dark h-100 shadow-sm">
-                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                        <i class="fas fa-users fa-3x mb-3 text-primary"></i>
-                        <h5 class="card-title">Utilisateurs</h5>
-                        <p class="card-text text-center">Gérer les comptes des utilisateurs.</p>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Commandes -->
-            <div class="col-md-4">
-                <a href="{{ route('commandes.index') }}" class="card text-decoration-none text-dark h-100 shadow-sm">
-                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                        <i class="fas fa-shopping-cart fa-3x mb-3 text-primary"></i>
-                        <h5 class="card-title">Commandes</h5>
-                        <p class="card-text text-center">Suivi et gestion des commandes du café.</p>
-                    </div>
-                </a>
-            </div>
-
+            @endforeach
         </div>
     </div>
-</div>
+</section>
+@endsection
+
+@section('styles')
+<style>
+/* ===== FOND GRADIENT ANIMÉ ===== */
+.dashboard-hero {
+    min-height: 100vh;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background: linear-gradient(135deg, #f8fafc, #fff7e6, #fef9e0);
+    background-size: 600% 600%;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
+}
+
+/* ===== TEXTES ===== */
+.dashboard-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #1e293b;
+}
+
+.dashboard-subtitle {
+    color: #d4af37; /* doré */
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+/* ===== CARTES DASHBOARD ===== */
+.card-dashboard {
+    display: block;
+    text-decoration: none;
+    background: white;
+    border-radius: 20px;
+    padding: 30px 20px;
+    color: #1e293b;
+    transition: all 0.4s ease;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ICONES */
+.card-dashboard i {
+    color: #d4af37;
+    transition: all 0.4s ease;
+}
+
+/* TITRE & DESCRIPTION */
+.card-dashboard h5 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.card-dashboard p {
+    font-size: 0.95rem;
+    color: #475569;
+}
+
+/* HOVER EFFECT DYNAMIQUE */
+.card-dashboard::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, transparent 70%);
+    transform: scale(0);
+    transition: transform 0.5s ease;
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+.card-dashboard:hover::before {
+    transform: scale(2);
+}
+
+.card-dashboard:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(212,175,55,0.4);
+}
+
+.card-dashboard:hover i {
+    transform: rotate(15deg) scale(1.2);
+    color: #d4af37;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .dashboard-title {
+        font-size: 2rem;
+    }
+}
+</style>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+@endsection
+
+@section('scripts')
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration:1200, once:true });
+</script>
 @endsection

@@ -7,14 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     protected $table = 'reservations';
+
     protected $fillable = [
         'date',
         'statut',
-        'activite_sportif_id'
+        'activite_sportif_id',
+        'user_id', // <-- Ajouter cette ligne
     ];
 
     public function activiteSportif()
     {
         return $this->belongsTo(\App\Models\ActiviteSportif::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
     }
 }
