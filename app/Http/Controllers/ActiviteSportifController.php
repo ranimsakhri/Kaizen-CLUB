@@ -25,12 +25,23 @@ class ActiviteSportifController extends Controller
     /**
      * Afficher le détail d'une activité (accessible aux utilisateurs normaux)
      */
-    public function show($id)
+  public function show($id)
 {
     $activiteSportif = ActiviteSportif::with('horaires')->findOrFail($id);
-    $activites = ActiviteSportif::all(); // récupère toutes les activités
+
+    // Vérifier si la capacité est atteinte
+    $nbParticipants = $activiteSportif->reservations()->count();
+
+    if($nbParticipants >= $activiteSportif->capacite) {
+        // Redirection avec message d'erreur
+        return redirect()->route('activiteSportif.index')
+                         ->with('error', 'Cette activité a atteint le nombre maximum de participants.');
+    }
+
+    $activites = ActiviteSportif::all(); // récupère toutes les activités pour l'affichage
     return view('ActiviteSportif.show', compact('activiteSportif', 'activites'));
 }
+
 
 
     /**

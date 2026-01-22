@@ -6,231 +6,215 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Kaizen Club')</title>
 
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- AOS -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: #f8f8f8;
+        :root {
+            --mauve-dark:   #1a0033;
+            --mauve:        #240046;
+            --gold:         #d4af37;
+            --text:         #f8fafc;
+            --text-soft:    rgba(248,250,252,0.84);
         }
 
-        /* ================= NAVBAR ================= */
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            background: var(--mauve);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Dancing Script', cursive;
+            font-weight: 400;
+            color: var(--text);
+        }
+
+        /* NAVBAR ultra transparente + fine */
         .navbar {
-            background: rgba(0,0,0,0.4) !important;
-            backdrop-filter: blur(10px);
+            background: rgba(36, 0, 70, 0.22) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+            padding: 0.75rem 0;
+            min-height: 58px;
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(36, 0, 70, 0.68) !important;
+            backdrop-filter: blur(14px);
+            border-bottom-color: rgba(212, 175, 55, 0.14);
         }
 
         .navbar-brand {
-            font-weight: 800;
-            font-size: 1.6rem;
-            color: #d4af37 !important;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.35rem;           /* taille élégante mais pas énorme */
+            font-weight: 500;
+            color: var(--gold) !important;
+            letter-spacing: -1.4px;       /* même style que ton hero */
+            line-height: 1;
+            padding: 0.1rem 0;
         }
 
         .nav-link {
-            color: white !important;
-            font-weight: 500;
-            margin: 0 10px;
-            transition: all 0.3s;
+            font-size: 0.97rem;
+            font-weight: 400;
+            color: var(--text-soft) !important;
+            padding: 0.4rem 0.9rem !important;
+            transition: all 0.28s ease;
         }
 
-        .nav-link:hover {
-            color: #f5d76e !important;
-            transform: translateY(-2px);
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--gold) !important;
+            transform: translateY(-1px);
         }
 
-        /* ================= HERO ================= */
-        .hero-kaizen {
-            position: relative;
-            height: 100vh;
-            background: linear-gradient(135deg, #2b1d14, #5a3d8a, #2b1d14);
-            background-size: 300% 300%;
-            animation: gradientMove 12s ease infinite;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: #f5f5f5;
+        .btn-kaizen, .btn-outline-kaizen {
+            font-size: 0.94rem;
+            padding: 0.5rem 1.3rem;
+            border-radius: 999px;
         }
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            padding: 20px;
-        }
-
-        .horse-svg {
-            width: 160px;
-            height: 160px;
-            fill: none;
-            stroke: #d4af37;
-            stroke-width: 4;
-            animation: draw 3s ease forwards;
-        }
-
-        @keyframes draw {
-            from { stroke-dasharray: 600; stroke-dashoffset: 600; }
-            to { stroke-dashoffset: 0; }
-        }
-
-        .letter-k {
-            fill: #d4af37;
-            font-size: 64px;
-            font-weight: 800;
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-top: 20px;
-        }
-
-        .hero-subtitle {
-            color: #d4af37;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-size: 1.2rem;
-        }
-
-        .hero-text {
-            max-width: 600px;
-            margin: 15px auto 0;
-            font-size: 1.1rem;
-            opacity: 0.95;
-        }
-
-        .btn-gold {
-            background: linear-gradient(135deg, #d4af37, #f5d76e);
-            color: #2b1d14;
-            border-radius: 30px;
-            padding: 12px 32px;
-            font-weight: 600;
+        .btn-kaizen {
+            background: var(--gold);
+            color: #0e0e1a;
             border: none;
-            transition: all 0.3s;
         }
 
-        .btn-gold:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(212,175,55,0.5);
+        .btn-kaizen:hover {
+            background: #3a0ca3;
+            color: white;
         }
 
-        /* ================= CONTENT ================= */
-        .content-wrapper {
-            background: white;
-            border-radius: 30px;
-            padding: 40px;
-            margin: 40px 0;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        .btn-outline-kaizen {
+            border: 1.4px solid var(--gold);
+            color: var(--gold);
         }
 
-        .founder-icon {
-            font-size: 120px;
-            color: #d4af37;
+        .btn-outline-kaizen:hover {
+            background: var(--gold);
+            color: #0e0e1a;
         }
 
-        .card-activity {
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s;
-            background: white;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        /* Sections plus fines et légères */
+        .content-section {
+            background: rgba(36,0,70,0.14);
+            border: 1px solid rgba(212,175,55,0.05);
+            border-radius: 14px;
+            margin: 2.5rem auto;
+            padding: 2.4rem 1.8rem;
+            max-width: 960px;
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            margin-bottom: 0.9rem;
             text-align: center;
         }
 
-        .card-activity:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        .section-subtitle {
+            font-size: 1.1rem;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: rgba(248,250,252,0.68);
+            text-align: center;
+            margin-bottom: 2.2rem;
         }
 
-        .card-icon {
-            width: 80px;
-            height: 80px;
-            margin: 30px auto 20px;
-            background: linear-gradient(135deg, #2b1d14, #5a3d8a);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        /* Cartes très fines */
+        .activity-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 1.6rem 1.3rem;
+            min-height: 200px;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .card-activity h5 {
-            font-weight: 600;
-            margin-bottom: 15px;
+        .activity-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.06);
         }
 
-        .card-activity p {
-            color: #64748b;
-            margin-bottom: 0;
+        .activity-icon {
+            font-size: 2.6rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
         }
 
+        .activity-card h5 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .activity-card p {
+            font-size: 0.96rem;
+            color: rgba(248,250,252,0.75);
+        }
+
+        /* Footer discret */
         footer {
-            background: rgba(0, 0, 0, 0.2);
-            color: white;
-            padding: 30px 0;
+            background: rgba(36,0,70,0.75);
+            border-top: 1px solid rgba(212,175,55,0.07);
+            padding: 2.2rem 0 1.6rem;
+            color: rgba(248,250,252,0.7);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--gold);
+            font-size: 1.25rem;
+            margin: 0 0.8rem;
+        }
+
+        footer a:hover {
+            color: #f5d76e;
         }
     </style>
 
     @yield('styles')
 </head>
 <body>
-    <!-- Navbar -->
+
     <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-dumbbell me-2"></i>Kaizen Club
-            </a>
+        <div class="container-xl">
+            <a class="navbar-brand" href="/">Kaizen Club</a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-home me-1"></i>Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('activiteSportif.index') }}"><i class="fas fa-running me-1"></i>Activités</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('horaire.index') }}"><i class="fas fa-clock me-1"></i>Horaires</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('produit.index') }}"><i class="fas fa-coffee me-1"></i>Café</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('activiteSportif.index') }}">Activités</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('horaire.index') }}">Horaires</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('produit.index') }}">Café</a></li>
 
                     @auth
-                        <li class="nav-item"><a class="nav-link" href="{{ route('Reservation.index') }}"><i class="fas fa-calendar-check me-1"></i>Réservations</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('commandes.index') }}"><i class="fas fa-shopping-cart me-1"></i>Commandes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('Reservation.index') }}">Réservations</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('commandes.index') }}">Commandes</a></li>
                         @if(auth()->user()->role === 'admin')
-                            <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}"><i class="fas fa-users me-1"></i>Utilisateurs</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Utilisateurs</a></li>
                         @endif
-                        <li class="nav-item ms-3">
+                        <li class="nav-item ms-2">
                             <form action="{{ route('logout') }}" method="POST">@csrf
-                                <button class="btn btn-outline-danger btn-sm"><i class="fas fa-sign-out-alt me-1"></i>Déconnexion</button>
+                                <button class="btn btn-outline-kaizen btn-sm">Déconnexion</button>
                             </form>
                         </li>
                     @endauth
 
                     @guest
-                        <li class="nav-item ms-3">
-                            <a href="{{ route('login') }}" class="btn btn-gold btn-sm"><i class="fas fa-sign-in-alt me-1"></i>Connexion</a>
+                        <li class="nav-item ms-2">
+                            <a href="{{ route('login') }}" class="btn btn-kaizen btn-sm">Connexion</a>
                         </li>
                     @endguest
                 </ul>
@@ -238,25 +222,31 @@
         </div>
     </nav>
 
+    <script>
+        window.addEventListener('scroll', () => {
+            document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 40);
+        });
+    </script>
+
     @yield('content')
 
     <footer class="text-center">
-        <div class="container">
-            <p class="mb-0">© {{ date('Y') }} Kaizen Club - L'excellence à chaque entraînement</p>
-            <div class="mt-3">
-                <a href="#" class="text-white mx-2"><i class="fab fa-facebook fa-lg"></i></a>
-                <a href="#" class="text-white mx-2"><i class="fab fa-instagram fa-lg"></i></a>
-                <a href="#" class="text-white mx-2"><i class="fab fa-twitter fa-lg"></i></a>
+        <div class="container-xl">
+            <p class="mb-2">© {{ date('Y') }} Kaizen Club – Grandir • Apprendre • Progresser</p>
+            <div>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
             </div>
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration:1200, once:true });
+        AOS.init({ duration: 900, once: true });
     </script>
+
     @yield('scripts')
 </body>
 </html>

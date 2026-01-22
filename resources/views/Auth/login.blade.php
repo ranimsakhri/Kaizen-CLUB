@@ -3,250 +3,334 @@
 @section('title', 'Connexion - Kaizen Club')
 
 @section('content')
+
 <!-- ================= HERO LOGIN ================= -->
 <section class="hero-login">
+
     <div class="hero-overlay"></div>
 
-    <div class="login-container text-center" data-aos="fade-up">
-        <!-- SVG CHEVAL + K -->
-        <div class="logo-login mb-4" data-aos="zoom-in">
-            <svg viewBox="0 0 200 200" class="horse-svg">
-                <path d="M100 20
-                         C70 40, 50 80, 55 120
-                         C60 155, 95 175, 100 180
-                         C105 175, 140 155, 145 120
-                         C150 80, 130 40, 100 20Z"/>
-                <text x="100" y="125" text-anchor="middle" class="letter-k">K</text>
-            </svg>
-        </div>
+    <div class="login-wrapper">
+        <div class="login-container text-center" data-aos="fade-up">
 
-        <!-- TITRE -->
-        <h1 class="hero-title mb-2">Connexion</h1>
-        <p class="hero-subtitle mb-4">Accédez à votre espace Kaizen Club</p>
+            <!-- LOGO SVG -->
+            <div class="logo-login mb-4" data-aos="zoom-in">
+                <svg viewBox="0 0 200 200" class="horse-svg">
+                    <path d="M100 20
+                             C70 40, 50 80, 55 120
+                             C60 155, 95 175, 100 180
+                             C105 175, 140 155, 145 120
+                             C150 80, 130 40, 100 20Z"/>
+                    <text x="100" y="125" text-anchor="middle" class="letter-k">K</text>
+                </svg>
+            </div>
 
-        <!-- FORMULAIRE -->
-        <div class="login-form-wrapper p-4">
-            @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            <!-- TITRES -->
+            <h1 class="hero-title">Connexion</h1>
+            <p class="hero-subtitle">Accédez à votre espace Kaizen Club</p>
 
-            @if(session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
+            <!-- FORMULAIRE -->
+            <div class="login-form-wrapper">
 
-            <form action="{{ route('login.post') }}" method="POST">
-                @csrf
+                @if($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul class="mb-0">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
-                <!-- EMAIL -->
-                <div class="mb-3 text-start">
-                    <label class="form-label fw-bold text-white">
-                        <i class="fas fa-envelope me-2 text-gold"></i>Adresse email
-                    </label>
-                    <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                           placeholder="exemple@gmail.com" value="{{ old('email') }}" required autofocus>
-                    @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                </div>
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
-                <!-- CODE SECRET -->
-                <div class="mb-3 text-start">
-                    <label class="form-label fw-bold text-white">
-                        <i class="fas fa-lock me-2 text-gold"></i>Code secret
-                    </label>
-                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                           placeholder="••••••••" required>
-                    @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                </div>
+                <form action="{{ route('login.post') }}" method="POST">
+                    @csrf
 
-                <!-- SE SOUVENIR DE MOI -->
-                <div class="form-check mb-4 text-start">
-                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                    <label class="form-check-label text-white" for="remember">Se souvenir de moi</label>
-                </div>
+                    <!-- EMAIL -->
+                    <div class="mb-4 text-start">
+                        <label class="form-label">
+                            <i class="fas fa-envelope me-2 icon-gold"></i>Adresse email
+                        </label>
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control @error('email') is-invalid @enderror"
+                            placeholder="exemple@gmail.com"
+                            value="{{ old('email') }}"
+                            required
+                            autofocus
+                        >
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <!-- BOUTONS -->
-                <button type="submit" class="btn btn-gold btn-lg w-100 mb-3">
-                    <i class="fas fa-sign-in-alt me-2"></i>Se connecter
-                </button>
+                    <!-- MOT DE PASSE -->
+                    <div class="mb-4 text-start">
+                        <label class="form-label">
+                            <i class="fas fa-lock me-2 icon-gold"></i>Code secret
+                        </label>
+                        <input
+                            type="password"
+                            name="password"
+                            class="form-control @error('password') is-invalid @enderror"
+                            placeholder="••••••••"
+                            required
+                        >
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <a href="{{ route('register') }}" class="btn btn-outline-light w-100">
-                    <i class="fas fa-user-plus me-2"></i>Créer un compte
-                </a>
-            </form>
+                    <!-- REMEMBER -->
+                    <div class="form-check mb-4 text-start">
+                        <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                        <label class="form-check-label" for="remember">
+                            Se souvenir de moi
+                        </label>
+                    </div>
+
+                    <!-- BOUTONS -->
+                    <button type="submit" class="btn btn-primary-kaizen w-100 mb-3">
+                        <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+                    </button>
+
+                    <a href="{{ route('register') }}" class="btn btn-outline-kaizen w-100">
+                        <i class="fas fa-user-plus me-2"></i>Créer un compte
+                    </a>
+
+                </form>
+
+            </div>
         </div>
     </div>
+
 </section>
+
 @endsection
 
+{{-- ================= STYLES ================= --}}
 @section('styles')
 <style>
-/* ================= HERO LOGIN ================= */
+
+/* ================= HERO LOGIN – MAUVE UNIFIÉ ================= */
 .hero-login {
     position: relative;
     min-height: 100vh;
+    background: #240046;
+    overflow: hidden;
     display: flex;
-    justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #2b1d14, #5a3d8a, #2b1d14);
-    background-size: 300% 300%;
-    animation: gradientMove 12s ease infinite;
+    justify-content: center;
+    padding: 100px 20px 120px;   /* ← espace haut + bas pour navbar & footer */
+    box-sizing: border-box;
 }
 
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.38);
     z-index: 1;
 }
 
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* FORMULAIRE */
-.login-container {
+/* ================= WRAPPER CENTRÉ ================= */
+.login-wrapper {
     position: relative;
     z-index: 2;
-    max-width: 400px;
     width: 100%;
-    padding: 40px 30px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
 }
 
-/* SVG CHEVAL + K */
+/* ================= CONTAINER FORMULAIRE ================= */
+.login-container {
+    width: 100%;
+    padding: 50px 40px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 28px;
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(212,175,55,0.10);
+    box-shadow: 0 40px 90px rgba(0,0,0,0.55);
+}
+
+/* ================= LOGO ================= */
 .horse-svg {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
     fill: none;
     stroke: #d4af37;
-    stroke-width: 3;
-    animation: draw 3s ease forwards;
-    margin: 0 auto;
+    stroke-width: 2.4;
+    animation: drawHorse 4.5s ease forwards;
+    margin: 0 auto 20px;
+}
+
+@keyframes drawHorse {
+    from { stroke-dasharray: 600; stroke-dashoffset: 600; }
+    to   { stroke-dashoffset: 0; }
 }
 
 .letter-k {
     fill: #d4af37;
-    font-size: 48px;
-    font-weight: 800;
+    font-family: 'Dancing Script', cursive;
+    font-size: 62px;
+    font-weight: 400;
+    dominant-baseline: middle;
 }
 
-@keyframes draw {
-    from { stroke-dasharray: 600; stroke-dashoffset: 600; }
-    to { stroke-dashoffset: 0; }
-}
-
-/* TEXTES */
+/* ================= TITRES ================= */
 .hero-title {
-    font-size: 2.8rem;
-    font-weight: 800;
-    color: #f5f5f5;
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.4rem;
+    font-weight: 400;
+    letter-spacing: -1px;
+    color: #f8fafc;
+    margin-bottom: 8px;
 }
 
 .hero-subtitle {
-    color: #d4af37;
-    font-size: 1.1rem;
-    letter-spacing: 1px;
+    font-size: 1.18rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: rgba(248,250,252,0.90);
+    margin-bottom: 36px;
 }
 
-/* INPUTS */
-.login-form-wrapper .form-control {
-    border-radius: 12px;
-    padding: 12px 15px;
-    border: 2px solid rgba(212,175,55,0.3);
-    background: rgba(255,255,255,0.15);
-    color: #fff; /* texte blanc */
+/* ================= FORM ================= */
+.form-label {
+    color: rgba(248,250,252,0.92);
+    font-size: 0.95rem;
     font-weight: 500;
-    text-shadow: 0 0 3px rgba(0,0,0,0.4);
+    margin-bottom: 8px;
 }
 
-/* Placeholder blanc */
-.login-form-wrapper .form-control::placeholder {
-    color: rgba(255,255,255,0.8);
-    opacity: 1;
+.form-control {
+    border-radius: 14px;
+    padding: 14px 18px;
+    border: 1.8px solid rgba(212,175,55,0.25);
+    background: rgba(255,255,255,0.10);
+    color: #f8fafc;
+    transition: all 0.32s ease;
 }
 
-.login-form-wrapper .form-control:focus {
+.form-control::placeholder {
+    color: rgba(248,250,252,0.65);
+}
+
+.form-control:focus {
+    background: rgba(255,255,255,0.18);
     border-color: #d4af37;
-    background: rgba(255,255,255,0.25);
-    box-shadow: 0 0 0 0.2rem rgba(212,175,55,0.5);
+    box-shadow: 0 0 0 0.2rem rgba(212,175,55,0.35);
     color: #fff;
 }
 
-/* BOUTONS */
-.btn-gold {
-    background: linear-gradient(135deg, #d4af37, #f5d76e);
-    color: #2b1d14;
-    border-radius: 30px;
-    font-weight: 600;
-    transition: all 0.3s;
+.form-check-input {
+    border-color: rgba(212,175,55,0.4);
 }
 
-.btn-gold:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(212,175,55,0.5);
+.form-check-input:checked {
+    background-color: #d4af37;
+    border-color: #d4af37;
 }
 
-.btn-outline-light {
-    border: 2px solid #fff;
-    color: #fff;
-    border-radius: 30px;
-    font-weight: 600;
-    transition: all 0.3s;
+.form-check-label {
+    font-size: 0.92rem;
+    color: rgba(248,250,252,0.88);
 }
 
-.btn-outline-light:hover {
-    background: rgba(255,255,255,0.2);
-    color: #fff;
-    transform: translateY(-2px);
+/* ================= BOUTONS ================= */
+.btn-primary-kaizen,
+.btn-outline-kaizen {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    padding: 14px;
+    border-radius: 999px;
+    transition: all 0.38s ease;
 }
 
-.alert {
-    border-radius: 15px;
+.btn-primary-kaizen {
+    background: #d4af37;
+    color: #0f0f1a;
+    border: none;
+    box-shadow: 0 12px 36px rgba(212,175,55,0.42);
 }
 
-/* RESPONSIVE */
+.btn-primary-kaizen:hover {
+    background: #3a0ca3;
+    color: #f8fafc;
+    transform: translateY(-6px);
+    box-shadow: 0 24px 56px rgba(58,12,163,0.50);
+}
+
+.btn-outline-kaizen {
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    background: transparent;
+}
+
+.btn-outline-kaizen:hover {
+    background: #d4af37;
+    color: #0f0f1a;
+    transform: translateY(-5px);
+}
+
+/* ================= RESPONSIVE ================= */
 @media (max-width: 576px) {
-    .login-container { padding: 30px 20px; }
-    .hero-title { font-size: 2rem; }
+    .hero-login {
+        padding: 90px 15px 110px;
+    }
+
+    .login-container {
+        padding: 40px 28px;
+    }
+
+    .hero-title {
+        font-size: 2.8rem;
+    }
+
+    .horse-svg {
+        width: 110px;
+        height: 110px;
+    }
+
+    .letter-k {
+        font-size: 54px;
+    }
 }
+
+@media (max-height: 680px) {
+    .hero-login {
+        padding-top: 80px;
+        padding-bottom: 80px;
+        align-items: flex-start;
+    }
+
+    .login-wrapper {
+        margin-top: 40px;
+    }
+}
+
 </style>
 
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 @endsection
 
 @section('scripts')
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
 <script>
-    AOS.init({ duration:1200, once:true });
-
-    // ================= AUTO-COMPLÉTION @gmail.com =================
-    document.addEventListener('DOMContentLoaded', function() {
-        const emailInput = document.getElementById('email');
-
-        emailInput.addEventListener('focus', function() {
-            if (!emailInput.value.includes('@')) {
-                emailInput.value = emailInput.value + '@gmail.com';
-            }
-        });
-
-        emailInput.addEventListener('input', function() {
-            const value = emailInput.value;
-            if (value.includes('@') && !value.endsWith('@gmail.com')) {
-                emailInput.value = value.split('@')[0] + '@gmail.com';
-            }
-        });
+    AOS.init({
+        duration: 1200,
+        once: true,
+        easing: 'ease-out-cubic'
     });
 </script>
 @endsection

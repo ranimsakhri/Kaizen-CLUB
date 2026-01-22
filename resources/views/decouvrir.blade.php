@@ -11,15 +11,21 @@
 
     <div class="hero-content text-center">
 
-        <!-- LOGO SVG CHEVAL + K -->
-        <div class="logo-kaizen" data-aos="zoom-in">
-            <svg viewBox="0 0 200 200" class="horse-svg">
-                <path d="M100 20
-                         C70 40, 50 80, 55 120
-                         C60 155, 95 175, 100 180
-                         C105 175, 140 155, 145 120
-                         C150 80, 130 40, 100 20Z"/>
-                <text x="100" y="125" text-anchor="middle" class="letter-k">K</text>
+        <div class="logo-kaizen mb-3" data-aos="zoom-in">
+            <svg viewBox="0 0 200 200" class="logo-svg">
+                <circle
+                    class="drawing-circle"
+                    cx="100"
+                    cy="100"
+                    r="78"
+                    fill="none"
+                    stroke="#d4af37"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-dasharray="490"
+                    stroke-dashoffset="490"
+                />
+                <text x="100" y="118" text-anchor="middle" class="letter-k">K</text>
             </svg>
         </div>
 
@@ -29,16 +35,16 @@
             Grandir • Apprendre • Progresser
         </p>
 
-        <p class="hero-text" data-aos="fade-up" data-aos-delay="400">
-            Un club jeune et moderne inspiré par l’esprit du cheval :
+        <p class="hero-description" data-aos="fade-up" data-aos-delay="400">
+            Un club jeune et moderne inspiré par l’esprit du cheval :<br>
             discipline, confiance et amélioration continue.
         </p>
 
         <div class="hero-buttons" data-aos="zoom-in" data-aos-delay="600">
-            <a href="{{ route('login') }}" class="btn btn-outline-light btn-lg me-3">
-                <i class="fas fa-sign-in-alt me-2"></i> Login
+            <a href="{{ route('login') }}" class="btn btn-outline-kaizen btn-lg me-4">
+                <i class="fas fa-sign-in-alt me-2"></i> Connexion
             </a>
-            <a href="#decouvrir-content" class="btn btn-gold btn-lg">
+            <a href="#decouvrir-content" class="btn btn-primary-kaizen btn-lg">
                 Découvrir le club
             </a>
         </div>
@@ -46,25 +52,25 @@
     </div>
 </section>
 
-<!-- ================= CONTENU ================= -->
-<section id="decouvrir-content" class="py-5" style="background:#f8f8f8;">
+<!-- ================= CONTENU PRINCIPAL ================= -->
+<section id="decouvrir-content" class="section-decouvrir">
     <div class="container">
 
         <!-- FONDATRICE -->
-        <div class="row align-items-center mb-5" data-aos="fade-up">
-            <div class="col-md-5 text-center mb-3">
+        <div class="row align-items-center mb-5 pb-4" data-aos="fade-up">
+            <div class="col-md-5 text-center mb-4 mb-md-0">
                 <i class="fas fa-horse-head founder-icon"></i>
             </div>
             <div class="col-md-7">
-                <h3 class="fw-bold hero-title">La fondatrice</h3>
-                <h5 class="text-gold">Ranim Sakhri</h5>
-                <p class="mt-3">
+                <h3 class="section-title">La fondatrice</h3>
+                <h5 class="founder-name">Ranim Sakhri</h5>
+                <p class="section-text">
                     Passionnée par le sport, l’éducation et le développement personnel,
                     <strong>Ranim Sakhri</strong> a fondé Kaizen Club avec une vision claire :
                     créer un espace sûr et motivant où les enfants et les jeunes peuvent
                     apprendre, progresser et développer leur confiance en eux.
                 </p>
-                <p>
+                <p class="section-text">
                     Inspiré par l’esprit du cheval — symbole de force, discipline et élégance —,
                     Kaizen Club accompagne chaque membre dans son évolution personnelle.
                 </p>
@@ -72,56 +78,48 @@
         </div>
 
         <!-- ACTIVITÉS -->
-        <div class="text-center mb-4" data-aos="fade-up">
-            <h2 class="fw-bold hero-title">Nos Activités</h2>
-            <p class="hero-text">
+        <div class="text-center mb-5 pb-3" data-aos="fade-up">
+            <h2 class="section-title">Nos Activités</h2>
+            <p class="section-subtitle">
                 Des activités variées pour développer le corps et l’esprit
             </p>
         </div>
 
-        <div class="row g-4">
-
+        <div class="row g-4 justify-content-center">
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="card-activity text-center">
-                    <div class="card-icon">
+                <div class="activity-card">
+                    <div class="activity-icon">
                         <i class="fas fa-horse"></i>
                     </div>
-                    <div class="card-body">
-                        <h5>Équitation</h5>
-                        <p>Apprendre la discipline, la confiance et le respect à travers le contact avec le cheval.</p>
-                    </div>
+                    <h5>Équitation</h5>
+                    <p>Apprendre la discipline, la confiance et le respect à travers le contact avec le cheval.</p>
                 </div>
             </div>
 
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="card-activity text-center">
-                    <div class="card-icon">
+                <div class="activity-card">
+                    <div class="activity-icon">
                         <i class="fas fa-running"></i>
                     </div>
-                    <div class="card-body">
-                        <h5>Activités Sportives</h5>
-                        <p>Développement physique, coordination et esprit d’équipe à travers des activités adaptées aux jeunes.</p>
-                    </div>
+                    <h5>Activités Sportives</h5>
+                    <p>Développement physique, coordination et esprit d’équipe à travers des activités adaptées aux jeunes.</p>
                 </div>
             </div>
 
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="card-activity text-center">
-                    <div class="card-icon">
+                <div class="activity-card">
+                    <div class="activity-icon">
                         <i class="fas fa-heart"></i>
                     </div>
-                    <div class="card-body">
-                        <h5>Bien-être & Discipline</h5>
-                        <p>Des séances pour renforcer la confiance en soi, la concentration et le bien-être mental.</p>
-                    </div>
+                    <h5>Bien-être & Discipline</h5>
+                    <p>Des séances pour renforcer la confiance en soi, la concentration et le bien-être mental.</p>
                 </div>
             </div>
-
         </div>
 
-        <!-- CTA -->
-        <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="400">
-            <a href="{{ route('login') }}" class="btn btn-gold btn-lg">
+        <!-- CTA FINAL -->
+        <div class="text-center mt-5 pt-4" data-aos="fade-up" data-aos-delay="400">
+            <a href="{{ route('login') }}" class="btn btn-primary-kaizen btn-lg">
                 Rejoindre Kaizen Club
             </a>
         </div>
@@ -131,146 +129,231 @@
 
 @endsection
 
+{{-- ================= STYLES ================= --}}
 @section('styles')
 <style>
-/* ================= HERO ================= */
+
+/* ================= HERO & SECTION – MAUVE UNIFIÉ ================= */
+.hero-kaizen,
+.section-decouvrir {
+    background: #240046;          /* Mauve fixe – identique à welcome */
+}
+
 .hero-kaizen {
     position: relative;
     height: 100vh;
-    background: linear-gradient(135deg, #2b1d14, #5a3d8a, #2b1d14);
-    background-size: 300% 300%;
-    animation: gradientMove 12s ease infinite;
+    min-height: 720px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
-    font-family: 'Poppins', sans-serif;
-}
-
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
 }
 
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.38);
     z-index: 1;
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
-    height: 100%;
-    color: #f5f5f5;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    color: #f8fafc;
+    max-width: 920px;
+    padding: 0 28px;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.6);
 }
 
-.horse-svg {
-    width: 160px;
-    height: 160px;
-    fill: none;
-    stroke: #d4af37;
-    stroke-width: 4;
-    animation: draw 3s ease forwards;
+/* ================= LOGO ================= */
+.logo-svg {
+    width: 170px;
+    height: 170px;
 }
 
-@keyframes draw {
-    from { stroke-dasharray: 600; stroke-dashoffset: 600; }
+.drawing-circle {
+    animation: drawCircle 4.8s ease forwards;
+}
+
+@keyframes drawCircle {
     to { stroke-dashoffset: 0; }
 }
 
 .letter-k {
     fill: #d4af37;
-    font-size: 64px;
-    font-weight: 800;
+    font-family: 'Dancing Script', cursive;
+    font-size: 120px;
+    font-weight: 400;
+    letter-spacing: -6px;
+    dominant-baseline: middle;
 }
 
+/* ================= TEXTES HERO ================= */
 .hero-title {
-    font-size: 3.5rem;
-    font-weight: 800;
-    margin-top: 20px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 5.4rem;
+    font-weight: 400;
+    letter-spacing: -1.4px;
+    margin: 16px 0 12px;
+    color: #f8fafc;
 }
 
 .hero-subtitle {
-    color: #d4af37;
-    letter-spacing: 3px;
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 6px;
     text-transform: uppercase;
-    font-size: 1.2rem;
+    color: rgba(248,250,252,0.92);
+    margin-bottom: 28px;
 }
 
-.hero-text {
-    max-width: 600px;
-    margin-top: 15px;
-    font-size: 1.1rem;
-    opacity: 0.95;
+.hero-description {
+    font-size: 1.28rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: rgba(248,250,252,0.90);
+    max-width: 740px;
+    margin: 0 auto 56px;
 }
 
-.btn-gold {
-    background: linear-gradient(135deg, #d4af37, #f5d76e);
-    color: #2b1d14;
-    border-radius: 30px;
-    padding: 12px 32px;
-    font-weight: 600;
+/* ================= BOUTONS – même que welcome ================= */
+.btn-primary-kaizen,
+.btn-outline-kaizen {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 500;
+    padding: 14px 56px;
+    border-radius: 999px;
+    transition: all 0.38s ease;
+}
+
+.btn-primary-kaizen {
+    background: #d4af37;           /* Gold de base */
+    color: #0f0f1a;
     border: none;
+    box-shadow: 0 12px 36px rgba(212,175,55,0.42);
 }
 
-.btn-gold:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(212,175,55,0.5);
+.btn-primary-kaizen:hover {
+    background: #3a0ca3;           /* Mauve au hover */
+    color: #f8fafc;
+    transform: translateY(-6px);
+    box-shadow: 0 24px 56px rgba(58,12,163,0.50);
 }
 
-.founder-icon {
-    font-size: 120px;
+.btn-outline-kaizen {
+    border: 2.2px solid #d4af37;
     color: #d4af37;
+    background: transparent;
 }
 
-.card-activity {
-    border-radius: 20px;
-    overflow: hidden;
-    transition: all 0.4s;
-    background: white;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+.btn-outline-kaizen:hover {
+    background: #d4af37;
+    color: #0f0f1a;
+    transform: translateY(-6px);
+}
+
+/* ================= SECTION DÉCOUVRIR ================= */
+.section-decouvrir {
+    color: #f8fafc;
+    padding: 100px 0 120px;
+}
+
+.section-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4.4rem;
+    font-weight: 400;
+    letter-spacing: -1.2px;
+    color: #f8fafc;
+    margin-bottom: 1.3rem;
     text-align: center;
 }
 
-.card-activity:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+.section-subtitle {
+    font-size: 1.45rem;
+    font-weight: 300;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(248,250,252,0.88);
+    margin-bottom: 3.2rem;
+    text-align: center;
 }
 
-.card-icon {
-    width: 80px;
-    height: 80px;
-    margin: 30px auto 20px;
-    background: linear-gradient(135deg, #2b1d14, #5a3d8a);
+.section-text {
+    font-size: 1.22rem;
+    line-height: 1.68;
+    color: rgba(248,250,252,0.90);
+    font-weight: 300;
+}
+
+.founder-name {
+    color: #d4af37;
+    font-size: 1.9rem;
+    font-weight: 500;
+    margin: 1.1rem 0 1.6rem;
+}
+
+.founder-icon {
+    font-size: 9.5rem;
+    color: #d4af37;
+    opacity: 0.88;
+}
+
+/* ================= CARTES ACTIVITÉS ================= */
+.activity-card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.07);
     border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: white;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    padding: 2.4rem 1.9rem;
+    text-align: center;
+    transition: all 0.42s ease;
+    min-height: 270px;
 }
 
-.card-activity h5 {
-    font-weight: 600;
-    margin-bottom: 15px;
+.activity-card:hover {
+    transform: translateY(-14px);
+    box-shadow: 0 28px 70px rgba(0,0,0,0.48);
+    background: rgba(255,255,255,0.08);
 }
 
-.card-activity p {
-    color: #64748b;
-    margin-bottom: 0;
+.activity-icon {
+    font-size: 3.4rem;
+    color: #d4af37;
+    margin-bottom: 1.5rem;
 }
 
-@media (max-width:768px){
-    .hero-title{ font-size:2.4rem;}
+.activity-card h5 {
+    font-size: 1.48rem;
+    font-weight: 500;
+    margin-bottom: 1.1rem;
+    color: #f8fafc;
 }
+
+.activity-card p {
+    font-size: 1.08rem;
+    color: rgba(248,250,252,0.82);
+    line-height: 1.62;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 992px) {
+    .hero-title { font-size: 4.4rem; }
+    .section-title { font-size: 3.8rem; }
+}
+
+@media (max-width: 768px) {
+    .hero-title       { font-size: 3.8rem; }
+    .section-title    { font-size: 3.3rem; }
+    .logo-svg         { width: 140px; height: 140px; }
+    .letter-k         { font-size: 96px; }
+    .hero-buttons     { flex-direction: column; gap: 20px; }
+    .founder-icon     { font-size: 7.5rem; }
+}
+
 </style>
 
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 @endsection
@@ -278,6 +361,10 @@
 @section('scripts')
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-AOS.init({ duration:1200, once:true });
+    AOS.init({
+        duration: 1200,
+        once: true,
+        easing: 'ease-out-cubic'
+    });
 </script>
 @endsection

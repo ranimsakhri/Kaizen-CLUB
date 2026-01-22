@@ -25,7 +25,7 @@
             @endauth
         </div>
 
-        <!-- Message succès -->
+        <!-- Messages -->
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert" data-aos="fade-down">
                 <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
@@ -33,18 +33,34 @@
             </div>
         @endif
 
-        <!-- ================== CARDS ACTIVITÉS (UNIFORME POUR TOUS) ================== -->
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" data-aos="fade-down">
+                <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        <!-- ================== CARDS ACTIVITÉS ================== -->
         <div class="row g-4" data-aos="fade-up">
             @foreach($activites as $index => $activite)
                 <div class="col-md-4" data-aos="zoom-in" data-aos-delay="{{ $index * 100 }}">
-                    <a href="{{ route('activiteSportif.show', $activite->id) }}" class="card-dashboard h-100 position-relative">
-                        <i class="fas fa-dumbbell fa-2x mb-3"></i>
-                        <h5>{{ $activite->nom }}</h5>
-                        <p>Type : {{ $activite->type }}</p>
-                        <p>Durée : {{ $activite->duree }} min</p>
-                        <p class="text-success fw-bold">Prix : {{ number_format($activite->prix, 2) }} DT</p>
-                        <p>Capacité : {{ $activite->capacite }} pers.</p>
-                    </a>
+                    @if($activite->reservations()->count() >= $activite->capacite)
+                        <div class="card-dashboard h-100 position-relative disabled-card">
+                            <i class="fas fa-dumbbell fa-2x mb-3"></i>
+                            <h5>{{ $activite->nom }}</h5>
+                            <p>Type : {{ $activite->type }}</p>
+                            <p class="text-danger fw-bold">Complet</p>
+                        </div>
+                    @else
+                        <a href="{{ route('activiteSportif.show', $activite->id) }}" class="card-dashboard h-100 position-relative">
+                            <i class="fas fa-dumbbell fa-2x mb-3"></i>
+                            <h5>{{ $activite->nom }}</h5>
+                            <p>Type : {{ $activite->type }}</p>
+                            <p>Durée : {{ $activite->duree }} min</p>
+                            <p class="text-success fw-bold">Prix : {{ number_format($activite->prix, 2) }} DT</p>
+                            <p>Capacité : {{ $activite->capacite }} pers.</p>
+                        </a>
+                    @endif
                 </div>
             @endforeach
         </div>
@@ -113,17 +129,8 @@
 }
 
 /* ================== TITRES ================== */
-.activities-title {
-    font-size: 2.4rem;
-    font-weight: 800;
-    color: #111827;
-    letter-spacing: 0.5px;
-}
-.activities-subtitle {
-    font-size: 1rem;
-    color: #9ca3af;
-    margin-top: 6px;
-}
+.activities-title { font-size: 2.4rem; font-weight: 800; color: #111827; letter-spacing: 0.5px; }
+.activities-subtitle { font-size: 1rem; color: #9ca3af; margin-top: 6px; }
 
 /* ================== BOUTON OR ================== */
 .btn-gold {
@@ -141,7 +148,7 @@
     color: #111827;
 }
 
-/* ================== CARTES ADMIN/USER ================== */
+/* ================== CARTES ================== */
 .card-dashboard {
     display: block;
     text-decoration: none;
@@ -156,19 +163,9 @@
     position: relative;
     overflow: hidden;
 }
-.card-dashboard i {
-    color: #d4af37;
-    transition: all 0.4s ease;
-}
-.card-dashboard h5 {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-weight: 700;
-}
-.card-dashboard p {
-    font-size: 0.95rem;
-    color: #475569;
-}
+.card-dashboard i { color: #d4af37; transition: all 0.4s ease; }
+.card-dashboard h5 { margin-top: 10px; margin-bottom: 10px; font-weight: 700; }
+.card-dashboard p { font-size: 0.95rem; color: #475569; }
 .card-dashboard::before {
     content: '';
     position: absolute;
@@ -189,6 +186,14 @@
 .card-dashboard:hover i {
     transform: rotate(15deg) scale(1.2);
     color: #d4af37;
+}
+
+/* ================== CARTE COMPLÈTE ================== */
+.disabled-card {
+    opacity: 0.6;
+    pointer-events: none;
+    background: #f5f5f5;
+    color: #9ca3af;
 }
 
 /* ================== TABLE ADMIN ================== */

@@ -11,15 +11,22 @@
 
     <div class="hero-content text-center">
 
-        <!-- LOGO SVG CHEVAL + K -->
-        <div class="logo-kaizen" data-aos="zoom-in">
-            <svg viewBox="0 0 200 200" class="horse-svg">
-                <path d="M100 20
-                         C70 40, 50 80, 55 120
-                         C60 155, 95 175, 100 180
-                         C105 175, 140 155, 145 120
-                         C150 80, 130 40, 100 20Z"/>
-                <text x="100" y="125" text-anchor="middle" class="letter-k">K</text>
+        <!-- LOGO -->
+        <div class="logo-kaizen mb-3" data-aos="zoom-in">
+            <svg viewBox="0 0 200 200" class="logo-svg">
+                <circle
+                    class="drawing-circle"
+                    cx="100"
+                    cy="100"
+                    r="78"
+                    fill="none"
+                    stroke="#d4af37"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-dasharray="490"
+                    stroke-dashoffset="490"
+                />
+                <text x="100" y="118" text-anchor="middle" class="letter-k">K</text>
             </svg>
         </div>
 
@@ -29,19 +36,18 @@
             Grandir • Apprendre • Progresser
         </p>
 
-        <p class="hero-text" data-aos="fade-up" data-aos-delay="400">
-            Un club jeune et moderne inspiré par l’esprit du cheval :
+        <p class="hero-description" data-aos="fade-up" data-aos-delay="400">
+            Un club moderne inspiré par l’esprit du cheval :<br>
             discipline, confiance et amélioration continue.
         </p>
 
         <div class="hero-buttons" data-aos="zoom-in" data-aos-delay="600">
-            <a href="{{ route('login') }}" class="btn btn-outline-light btn-lg me-3">
-                <i class="fas fa-sign-in-alt me-2"></i> Login
+            <a href="{{ route('login') }}" class="btn btn-outline-kaizen btn-lg me-4">
+                <i class="fas fa-sign-in-alt me-2"></i>Connexion
             </a>
-            <a href="{{ route('club.decouvrir') }}" class="btn btn-gold btn-lg">
-    Découvrir le club
-</a>
-
+            <a href="{{ route('club.decouvrir') }}" class="btn btn-primary-kaizen btn-lg">
+                Découvrir le club
+            </a>
         </div>
 
     </div>
@@ -53,134 +59,156 @@
 @section('styles')
 <style>
 
-/* ================= HERO ================= */
+/* ================= HERO – MAUVE UNIFIÉ ================= */
 .hero-kaizen {
     position: relative;
     height: 100vh;
-    background: linear-gradient(
-        135deg,
-        #2b1d14,
-        #5a3d8a,
-        #2b1d14
-    );
-    background-size: 300% 300%;
-    animation: gradientMove 12s ease infinite;
+    min-height: 720px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #240046;          /* Mauve sombre fixe – plus de dégradé */
     overflow: hidden;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
 }
 
-/* ANIMATION DU GRADIENT */
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* OVERLAY */
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.38);  /* Légèrement plus fort pour contraste */
     z-index: 1;
 }
 
-/* CONTENT */
 .hero-content {
     position: relative;
     z-index: 2;
-    height: 100%;
-    color: #f5f5f5;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    color: #f8fafc;
+    max-width: 920px;
+    padding: 0 28px;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.6);
 }
 
-/* SVG LOGO */
-.horse-svg {
-    width: 160px;
-    height: 160px;
-    fill: none;
-    stroke: #d4af37;
-    stroke-width: 4;
-    animation: draw 3s ease forwards;
+/* ================= LOGO ================= */
+.logo-svg {
+    width: 170px;
+    height: 170px;
 }
 
-@keyframes draw {
-    from {
-        stroke-dasharray: 600;
-        stroke-dashoffset: 600;
-    }
-    to {
-        stroke-dashoffset: 0;
-    }
+.drawing-circle {
+    animation: drawCircle 4.8s ease forwards;
 }
 
-/* LETTRE K */
+@keyframes drawCircle {
+    to { stroke-dashoffset: 0; }
+}
+
 .letter-k {
     fill: #d4af37;
-    font-size: 64px;
-    font-weight: 800;
+    font-family: 'Dancing Script', cursive;
+    font-size: 120px;
+    font-weight: 400;
+    letter-spacing: -6px;
+    dominant-baseline: middle;
 }
 
-/* TEXT */
+/* ================= TEXTES ================= */
 .hero-title {
-    font-size: 3.5rem;
-    font-weight: 800;
-    margin-top: 20px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 5.4rem;
+    font-weight: 400;
+    letter-spacing: -1.4px;
+    margin: 16px 0 12px;
+    color: #f8fafc;
 }
 
 .hero-subtitle {
-    color: #d4af37;
-    letter-spacing: 3px;
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 6px;
     text-transform: uppercase;
-    font-size: 1.2rem;
+    color: rgba(248,250,252,0.92);
+    margin-bottom: 28px;
 }
 
-.hero-text {
-    max-width: 600px;
-    margin-top: 15px;
-    font-size: 1.1rem;
-    opacity: 0.95;
+.hero-description {
+    font-size: 1.28rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: rgba(248,250,252,0.90);
+    max-width: 740px;
+    margin: 0 auto 56px;
 }
 
-/* BUTTONS */
-.btn-gold {
-    background: linear-gradient(135deg, #d4af37, #f5d76e);
-    color: #2b1d14;
-    border-radius: 30px;
-    padding: 12px 32px;
-    font-weight: 600;
+/* ================= BOUTONS ================= */
+.btn-primary-kaizen,
+.btn-outline-kaizen {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 500;
+    padding: 14px 56px;
+    border-radius: 999px;
+    transition: all 0.38s ease;
+}
+
+.btn-primary-kaizen {
+    background: #d4af37;              /* Gold de base */
+    color: #0f0f1a;
     border: none;
+    box-shadow: 0 12px 36px rgba(212,175,55,0.42);
 }
 
-.btn-gold:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(212,175,55,0.5);
+.btn-primary-kaizen:hover {
+    background: #3a0ca3;              /* Mauve au hover */
+    color: #f8fafc;
+    transform: translateY(-6px);
+    box-shadow: 0 24px 56px rgba(58,12,163,0.50);
 }
 
-/* RESPONSIVE */
+.btn-outline-kaizen {
+    border: 2.2px solid #d4af37;
+    color: #d4af37;
+    background: transparent;
+}
+
+.btn-outline-kaizen:hover {
+    background: #d4af37;
+    color: #0f0f1a;
+    transform: translateY(-6px);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 992px) {
+    .hero-title { font-size: 4.4rem; }
+}
+
 @media (max-width: 768px) {
-    .hero-title {
-        font-size: 2.4rem;
+    .hero-title { font-size: 3.8rem; }
+    .logo-svg   { width: 140px; height: 140px; }
+    .letter-k   { font-size: 96px; }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .btn-primary-kaizen,
+    .btn-outline-kaizen {
+        padding: 13px 48px;
     }
 }
 
 </style>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 @endsection
 
-{{-- ================= SCRIPTS ================= --}}
 @section('scripts')
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     AOS.init({
         duration: 1200,
-        once: true
+        once: true,
+        easing: 'ease-out-cubic'
     });
 </script>
 @endsection
