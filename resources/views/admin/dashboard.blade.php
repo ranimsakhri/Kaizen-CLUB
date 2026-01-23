@@ -5,8 +5,12 @@
 @section('content')
 <section class="dashboard-hero">
     <div class="container py-5 text-center">
-        <h1 class="dashboard-title mb-2" data-aos="fade-down"><i class="fas fa-user-shield me-2"></i>Dashboard Admin</h1>
-        <p class="dashboard-subtitle mb-5" data-aos="fade-up" data-aos-delay="200">Gestion complète du club Kaizen</p>
+        <h1 class="dashboard-title mb-2" data-aos="fade-down">
+            <i class="fas fa-user-shield me-2 text-gold"></i>Dashboard Admin
+        </h1>
+        <p class="dashboard-subtitle mb-5" data-aos="fade-up" data-aos-delay="200">
+            Gestion complète du club Kaizen
+        </p>
 
         <div class="row g-4">
             <!-- Cartes -->
@@ -24,9 +28,9 @@
             @foreach($cards as $index => $card)
             <div class="col-md-4" data-aos="zoom-in" data-aos-delay="{{ $index * 150 }}">
                 <a href="{{ route($card['route']) }}" class="card-dashboard h-100">
-                    <i class="fas fa-{{ $card['icon'] }} fa-3x mb-3"></i>
-                    <h5>{{ $card['title'] }}</h5>
-                    <p>{{ $card['desc'] }}</p>
+                    <i class="fas fa-{{ $card['icon'] }} fa-3x mb-3 text-gold"></i>
+                    <h5 class="card-title">{{ $card['title'] }}</h5>
+                    <p class="card-desc">{{ $card['desc'] }}</p>
                 </a>
             </div>
             @endforeach
@@ -53,15 +57,15 @@
     100% {background-position:0% 50%;}
 }
 
-/* ===== TEXTES ===== */
+/* ===== TEXTES – TITRES EN NOIR ===== */
 .dashboard-title {
     font-size: 2.8rem;
     font-weight: 800;
-    color: #1e293b;
+    color: #111827;
 }
 
 .dashboard-subtitle {
-    color: #d4af37; /* doré */
+    color: #374151;
     font-size: 1.2rem;
     letter-spacing: 1px;
 }
@@ -76,7 +80,7 @@
     color: #1e293b;
     transition: all 0.4s ease;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
     height: 100%;
     position: relative;
     overflow: hidden;
@@ -88,24 +92,25 @@
     transition: all 0.4s ease;
 }
 
-/* TITRE & DESCRIPTION */
-.card-dashboard h5 {
+/* TITRE & DESCRIPTION DES CARTES */
+.card-title {
     margin-top: 10px;
     margin-bottom: 10px;
     font-weight: 700;
+    color: #111827;
 }
 
-.card-dashboard p {
+.card-desc {
     font-size: 0.95rem;
     color: #475569;
 }
 
-/* HOVER EFFECT DYNAMIQUE */
+/* HOVER EFFECT */
 .card-dashboard::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(212,175,55,0.12) 0%, transparent 70%);
     transform: scale(0);
     transition: transform 0.5s ease;
     border-radius: 20px;
@@ -118,18 +123,17 @@
 
 .card-dashboard:hover {
     transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 50px rgba(212,175,55,0.4);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
 }
 
 .card-dashboard:hover i {
     transform: rotate(15deg) scale(1.2);
-    color: #d4af37;
 }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
     .dashboard-title {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
 }
 </style>

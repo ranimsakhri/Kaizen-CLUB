@@ -26,7 +26,6 @@
             <a href="{{ route('activiteSportif.index') }}" class="btn btn-outline-secondary btn-sm mb-2" data-aos="zoom-in">
                 <i class="fas fa-arrow-left me-1"></i> Retour
             </a>
-
         </div>
 
         <!-- Activités et horaires -->
@@ -34,7 +33,7 @@
             <div class="card card-activity mb-4" data-aos="fade-up">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                        <h4 class="fw-bold text-gold">
+                        <h4 class="fw-bold">
                             <i class="fas fa-dumbbell me-2 text-gold"></i> {{ $activite->nom }}
                         </h4>
 
@@ -57,7 +56,7 @@
                                         <div class="mb-2">
                                             <i class="fas fa-clock fa-2x text-gold"></i>
                                         </div>
-                                        <h5>{{ $horaire->date->format('d/m/Y') }}</h5>
+                                        <h5 class="activity-detail-title">{{ $horaire->date->format('d/m/Y') }}</h5>
                                         <p>{{ $horaire->heure_debut }} - {{ $horaire->heure_fin }}</p>
 
                                         <!-- ACTIONS : ADMIN SEULEMENT -->
@@ -98,7 +97,7 @@
         @auth
             @if(auth()->user()->role === 'admin')
                 <div class="table-responsive mt-5" data-aos="fade-up">
-                    <h4 class="mb-3 text-gold">Vue Administrative</h4>
+                    <h4 class="mb-3 activity-detail-title">Vue Administrative</h4>
                     <table class="table table-hover table-striped align-middle">
                         <thead class="table-dark">
                             <tr>
@@ -161,20 +160,20 @@
     100% {background-position:0% 50%;}
 }
 
-/* TITRES */
-.activities-title {
-    font-size: 2.4rem;
+/* TITRES – TOUS EN NOIR */
+.activities-title,
+.activity-detail-title,
+h2, h4, h5 {
+    color: #111827 !important;
     font-weight: 800;
-    color: #111827;
-    letter-spacing: 0.5px;
 }
+
 .activities-subtitle {
-    font-size: 1rem;
-    color: #9ca3af;
+    color: #374151;
     margin-top: 6px;
 }
 
-/* GOLD TEXT */
+/* GOLD TEXT (seulement icônes et éléments spécifiques) */
 .text-gold {
     color: #d4af37 !important;
 }

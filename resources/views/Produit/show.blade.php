@@ -15,7 +15,7 @@
         <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap">
             <div>
                 <h2 class="activities-title" data-aos="fade-right">
-                    <i class="fas fa-box me-2"></i> Détails du Produit
+                    <i class="fas fa-box me-2 text-gold"></i> Détails du Produit
                 </h2>
                 <p class="activities-subtitle" data-aos="fade-left">
                     Gestion administrative du produit
@@ -32,9 +32,9 @@
             <div class="col-md-6" data-aos="zoom-in">
                 <div class="card-dashboard text-center">
 
-                    <i class="fas fa-coffee fa-3x mb-3"></i>
+                    <i class="fas fa-coffee fa-3x mb-3 text-gold"></i>
 
-                    <h5 class="fw-bold">{{ $produit->nom }}</h5>
+                    <h5 class="fw-bold text-gold">{{ $produit->nom }}</h5>
                     <p>Catégorie : {{ $produit->categorie->nom ?? 'N/A' }}</p>
                     <p class="text-success fw-bold">
                         {{ number_format($produit->prix, 2) }} DT
@@ -76,7 +76,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
             <div class="text-center w-100 mb-4">
                 <i class="fas fa-coffee fa-4x text-gold mb-3"></i>
-                <h2 class="activities-title">{{ $produit->nom }}</h2>
+                <h2 class="activities-title text-gold">{{ $produit->nom }}</h2>
                 <p class="activities-subtitle">{{ $produit->categorie->nom ?? 'Produit du café' }}</p>
             </div>
 
@@ -134,7 +134,8 @@
 }
 
 .activities-subtitle {
-    color: #9ca3af;
+    color: #6b7280;
+    font-weight: 500;
 }
 
 /* ======================= CARD ======================= */
@@ -151,8 +152,9 @@
     box-shadow: 0 25px 60px rgba(212,175,55,.4);
 }
 
-.card-dashboard i {
-    color: #d4af37;
+/* ======================= COULEUR GOLD ======================= */
+.text-gold {
+    color: #d4af37 !important;
 }
 
 /* ======================= BOUTONS ======================= */
@@ -210,6 +212,13 @@
 .btn-outline-gold:hover {
     background: #d4af37;
     color: #111827;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .activities-title {
+        font-size: 2rem;
+    }
 }
 </style>
 

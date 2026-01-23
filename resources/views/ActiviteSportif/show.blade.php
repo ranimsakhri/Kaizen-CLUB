@@ -3,214 +3,279 @@
 @section('title', $activiteSportif->nom . ' - Kaizen Club')
 
 @section('content')
-@auth
-    @if(auth()->user()->role === 'admin')
-        <!-- ================= HERO ADMIN ================= -->
-        <section class="activity-hero position-relative">
-            <div class="hero-overlay"></div>
-            <div class="container text-center py-5 hero-content" data-aos="fade-up">
-                <div class="hero-icon mb-4 dynamic-icon">
-                    @switch($activiteSportif->type)
-                        @case('Équitation') <i class="fas fa-horse"></i> @break
-                        @case('Natation') <i class="fas fa-swimmer"></i> @break
-                        @case('Danse') <i class="fas fa-music"></i> @break
-                        @case('Fitness') <i class="fas fa-dumbbell"></i> @break
-                        @case('Yoga') <i class="fas fa-spa"></i> @break
-                        @case('Musculation') <i class="fas fa-dumbbell"></i> @break
-                        @case('Boxe') <i class="fas fa-hand-rock"></i> @break
-                        @default <i class="fas fa-running"></i>
-                    @endswitch
-                </div>
 
-                <h1 class="hero-title">{{ $activiteSportif->nom }}</h1>
-                <p class="hero-subtitle">{{ $activiteSportif->type }} • {{ $activiteSportif->duree }} min • {{ number_format($activiteSportif->prix,2) }} DT</p>
+<section class="activities-hero">
+    <div class="container py-5">
 
-                <a href="{{ route('activiteSportif.index') }}" class="btn btn-outline-dashboard mt-3">
-                    <i class="fas fa-arrow-left me-2"></i>Retour aux activités
-                </a>
+        <!-- Header avec retour -->
+        <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap">
+            <div>
+                <h2 class="activities-title" data-aos="fade-right">
+                    <i class="fas fa-dumbbell me-2"></i>{{ $activiteSportif->nom }}
+                </h2>
+                <p class="activities-subtitle" data-aos="fade-left">
+                    {{ $activiteSportif->type }} • {{ $activiteSportif->duree }} min • {{ number_format($activiteSportif->prix, 2) }} DT
+                </p>
             </div>
-        </section>
 
-        <!-- ================= DETAILS ADMIN ================= -->
-        <section class="activity-details container my-5">
-            <div class="row g-4 align-items-center">
-                <div class="col-lg-7">
-                    <div class="badge badge-type mb-3">{{ $activiteSportif->type }}</div>
-                    <h2 class="activity-title mb-3">{{ $activiteSportif->nom }}</h2>
-                    <h3 class="text-gold mb-3">{{ number_format($activiteSportif->prix,2) }} DT / séance</h3>
+            <a href="{{ route('activiteSportif.index') }}" class="btn btn-outline-gold" data-aos="fade-left">
+                <i class="fas fa-arrow-left me-2"></i>Retour aux activités
+            </a>
+        </div>
 
-                    <div class="row g-3 mb-4">
-                        <div class="col-6">
-                            <div class="info-card">
-                                <i class="fas fa-clock fa-2x text-gold"></i>
-                                <div>
-                                    <small class="text-muted d-block">Durée</small>
-                                    <strong>{{ $activiteSportif->duree }} minutes</strong>
-                                </div>
+        <!-- Messages -->
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert" data-aos="fade-down">
+                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" data-aos="fade-down">
+                <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        <!-- Contenu principal -->
+        <div class="row g-4" data-aos="fade-up">
+
+            <!-- Carte principale d'activité -->
+            <div class="col-lg-8">
+                <div class="card-dashboard h-100 text-center">
+                    <div class="card-body py-5">
+                        <div class="dynamic-icon mb-4 mx-auto">
+                            @switch($activiteSportif->type)
+                                @case('Équitation') <i class="fas fa-horse"></i> @break
+                                @case('Natation') <i class="fas fa-swimmer"></i> @break
+                                @case('Danse') <i class="fas fa-music"></i> @break
+                                @case('Fitness') <i class="fas fa-dumbbell"></i> @break
+                                @case('Yoga') <i class="fas fa-spa"></i> @break
+                                @case('Musculation') <i class="fas fa-dumbbell"></i> @break
+                                @case('Boxe') <i class="fas fa-hand-rock"></i> @break
+                                @default <i class="fas fa-running"></i>
+                            @endswitch
+                        </div>
+
+                        <h3 class="mb-3 activity-detail-title">{{ $activiteSportif->nom }}</h3>
+
+                        <div class="d-flex justify-content-center gap-5 mb-4 flex-wrap">
+                            <div class="info-item">
+                                <i class="fas fa-clock me-2 text-gold"></i>
+                                <strong>{{ $activiteSportif->duree }} min</strong>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-users me-2 text-gold"></i>
+                                <strong>{{ $activiteSportif->capacite }} pers.</strong>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-tag me-2 text-gold"></i>
+                                <strong class="text-success">{{ number_format($activiteSportif->prix, 2) }} DT</strong>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="info-card">
-                                <i class="fas fa-users fa-2x text-gold"></i>
-                                <div>
-                                    <small class="text-muted d-block">Capacité</small>
-                                    <strong>{{ $activiteSportif->capacite }} personnes</strong>
+
+                        @php
+                            $placesPrises = $activiteSportif->reservations()->count();
+                            $estComplet = $placesPrises >= $activiteSportif->capacite;
+                        @endphp
+
+                        @if($estComplet)
+                            <div class="mt-5">
+                                <div class="alert alert-danger d-inline-block px-5 py-3">
+                                    <i class="fas fa-ban me-2"></i>
+                                    Activité complète ! ({{ $placesPrises }} / {{ $activiteSportif->capacite }} réservations)
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        @else
+                            @auth
+                                @if(auth()->user()->role === 'user')
+                                    <a href="{{ route('Reservation.create', $activiteSportif->id) }}" class="btn btn-gold btn-lg mt-4">
+                                        <i class="fas fa-calendar-check me-2"></i>Réserver maintenant
+                                    </a>
+                                @endif
 
-                    <div class="d-flex gap-3 flex-wrap">
-                        <a href="{{ route('activiteSportif.edit', $activiteSportif->id) }}" class="btn btn-gold btn-lg">
-                            <i class="fas fa-edit me-2"></i>Modifier
-                        </a>
-                        <form action="{{ route('activiteSportif.destroy', $activiteSportif->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Supprimer cette activité ?');">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-outline-dashboard btn-lg">
-                                <i class="fas fa-trash me-2"></i>Supprimer
-                            </button>
-                        </form>
+                                @if(auth()->user()->role === 'admin')
+                                    <div class="mt-4 d-flex gap-3 justify-content-center flex-wrap">
+                                        <a href="{{ route('activiteSportif.edit', $activiteSportif->id) }}" class="btn btn-warning">
+                                            <i class="fas fa-edit me-2"></i>Modifier
+                                        </a>
+                                        <form action="{{ route('activiteSportif.destroy', $activiteSportif->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Supprimer cette activité ?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger">
+                                                <i class="fas fa-trash me-2"></i>Supprimer
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endif
+                            @endauth
+                        @endif
                     </div>
                 </div>
             </div>
-        </section>
-    @endif
 
-    @if(auth()->user()->role === 'user')
-        <!-- ================= HERO USER ================= -->
-        <section class="reservation-hero position-relative mb-5">
-            <div class="hero-overlay"></div>
-            <div class="container text-center hero-content py-5" data-aos="fade-up">
-                <div class="hero-icon dynamic-icon mb-3">
-                    @switch($activiteSportif->type)
-                        @case('Équitation') <i class="fas fa-horse"></i> @break
-                        @case('Natation') <i class="fas fa-swimmer"></i> @break
-                        @case('Danse') <i class="fas fa-music"></i> @break
-                        @case('Fitness') <i class="fas fa-dumbbell"></i> @break
-                        @case('Yoga') <i class="fas fa-spa"></i> @break
-                        @case('Musculation') <i class="fas fa-dumbbell"></i> @break
-                        @case('Boxe') <i class="fas fa-hand-rock"></i> @break
-                        @default <i class="fas fa-running"></i>
-                    @endswitch
-                </div>
-                <h1 class="hero-title mb-2">{{ $activiteSportif->nom }}</h1>
-                <p class="hero-subtitle">{{ $activiteSportif->type }} • {{ $activiteSportif->duree }} min • {{ number_format($activiteSportif->prix,2) }} DT</p>
-            </div>
-        </section>
-
-        <!-- ================= DETAILS USER ================= -->
-        <section class="activity-details container my-5">
-            <div class="card-activity h-100 text-center shadow-sm">
-                <div class="card-body d-flex flex-column justify-content-between">
-                    <div>
-                        <i class="fas fa-dumbbell fa-3x mb-3 text-gold"></i>
-                        <h5 class="fw-bold text-gold">{{ $activiteSportif->nom }}</h5>
-                        <p class="text-gold">Type : {{ $activiteSportif->type }}</p>
-                        <p class="text-gold">Durée : {{ $activiteSportif->duree }} min</p>
-                        <p class="fw-bold text-gold">Prix : {{ number_format($activiteSportif->prix,2) }} DT</p>
-                        <p class="text-gold">Capacité : {{ $activiteSportif->capacite }} pers.</p>
-                    </div>
-                    <div class="mt-3 d-flex gap-2 justify-content-center">
-                        <a href="{{ route('activiteSportif.index') }}" class="btn btn-outline-gold w-45">
-                            Retour
-                        </a>
-                        <a href="{{ route('Reservation.create', $activiteSportif->id) }}" class="btn btn-gold w-45">
-                            Réserver
-                        </a>
+            <!-- Sidebar infos supplémentaires -->
+            <div class="col-lg-4">
+                <div class="card-dashboard h-100">
+                    <div class="card-body">
+                        <h5 class="mb-4 activity-detail-title">Informations</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="fas fa-tag text-gold me-2"></i>
+                                <strong>Type :</strong> {{ $activiteSportif->type }}
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-clock text-gold me-2"></i>
+                                <strong>Durée :</strong> {{ $activiteSportif->duree }} minutes
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-users text-gold me-2"></i>
+                                <strong>Capacité :</strong> {{ $activiteSportif->capacite }} personnes
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-users text-gold me-2"></i>
+                                <strong>Réservées :</strong> {{ $placesPrises }}
+                            </li>
+                            <li>
+                                <i class="fas fa-money-bill-wave text-gold me-2"></i>
+                                <strong>Prix :</strong> <span class="text-success fw-bold">{{ number_format($activiteSportif->prix, 2) }} DT</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </section>
-    @endif
-@endauth
+
+        </div>
+
+    </div>
+</section>
+
 @endsection
 
 @section('styles')
 <style>
-/* ================= HERO ADMIN ================= */
-.activity-hero {
-    position: relative;
-    min-height: 50vh;
-    background: linear-gradient(135deg, #fef9e0, #fff7e6, #f8fafc);
+/* ================== HERO ================== */
+.activities-hero {
+    min-height: 100vh;
+    padding: 60px 0;
+    background: linear-gradient(135deg, #f8fafc, #fff7e6, #fef9e0);
     background-size: 600% 600%;
-    animation: gradientMove 15s ease infinite;
+    animation: gradientBG 15s ease infinite;
+}
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ================== TITRES – TOUS EN NOIR ================== */
+.activities-title,
+.activity-detail-title,
+h1, h2, h3, h4, h5 {
+    color: #111827 !important;
+    font-weight: 800;
+}
+
+.activities-subtitle,
+.activities-hero p,
+.card-dashboard p,
+.info-item,
+.alert {
+    color: #374151;
+}
+
+/* ================== BOUTON OR ================== */
+.btn-gold {
+    background: linear-gradient(135deg, #d4af37, #f5d76e);
+    color: #111827;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 28px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(212,175,55,0.4);
+    color: #111827;
+}
+
+.btn-outline-gold {
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    background: transparent;
+    border-radius: 30px;
+    padding: 10px 24px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.btn-outline-gold:hover {
+    background: #d4af37;
+    color: #111827;
+}
+
+/* ================== CARTES ================== */
+.card-dashboard {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    color: #1e293b;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    height: 100%;
+    text-align: center;
+}
+.card-dashboard:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(212,175,55,0.3);
+}
+
+.dynamic-icon {
+    font-size: 5rem;
+    width: 140px;
+    height: 140px;
+    background: linear-gradient(135deg, #d4af37, #f5d76e);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #111827;
-    text-align: center;
-}
-.hero-overlay { position: absolute; inset:0; background: rgba(0,0,0,0.05); z-index:1; }
-.hero-content { position: relative; z-index:2; }
-.hero-title { font-size: 2.8rem; font-weight: 800; color: #d4af37; }
-.hero-subtitle { color: #d4af37; letter-spacing: 1.2px; }
-
-/* ================= HERO USER ================= */
-.reservation-hero {
-    position: relative;
-    min-height: 25vh;
-    background: linear-gradient(135deg,#2b1d14,#4a3c7a,#2b1d14);
-    background-size: 300% 300%;
-    animation: gradientMove 12s ease infinite;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 3rem;
-    border-radius: 20px;
-    color: #d4af37;
-}
-.reservation-hero .hero-overlay { background: rgba(0,0,0,0.4); border-radius: 20px; }
-
-/* ================= ICONS ================= */
-.dynamic-icon {
-    font-size: 4rem;
-    width: 130px;
-    height: 130px;
-    background: linear-gradient(135deg,#d4af37,#f5d76e);
-    border-radius: 50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#111827;
-    margin:0 auto 20px;
+    margin: 0 auto 25px;
     transition: all 0.45s ease;
 }
-.dynamic-icon:hover { transform: scale(1.2) rotate(10deg); box-shadow:0 30px 65px rgba(212,175,55,0.45); }
-
-/* ================= CARTES ================= */
-.card-activity {
-    border-radius: 20px;
-    transition: all 0.3s ease;
-    padding: 20px;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(14px);
-    color:#d4af37;
+.dynamic-icon:hover {
+    transform: scale(1.15) rotate(8deg);
+    box-shadow: 0 20px 50px rgba(212,175,55,0.4);
 }
-.card-activity:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(212,175,55,0.2); }
 
-/* ================= BOUTONS ================= */
-.btn-gold { background: linear-gradient(135deg,#d4af37,#f5d76e); color:#111827; border-radius:30px; font-weight:600; transition: all 0.3s ease; }
-.btn-gold:hover { transform: translateY(-2px) scale(1.03); box-shadow:0 12px 30px rgba(212,175,55,0.45); }
+.info-item {
+    font-size: 1.1rem;
+}
 
-.btn-outline-gold { border:1px solid #d4af37; color:#d4af37; border-radius:30px; transition: all 0.3s ease; }
-.btn-outline-gold:hover { background:#d4af37; color:#111827; }
+.info-item strong {
+    color: #111827;
+}
 
-.w-45 { width:45%; }
+/* ================== RESPONSIVE ================== */
+@media (max-width: 992px) {
+    .activities-title { font-size: 2.4rem; }
+}
 
-@keyframes gradientMove { 0% {background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
-
-/* RESPONSIVE */
-@media(max-width:768px){ .hero-title{font-size:2.2rem;} }
+@media (max-width: 768px) {
+    .activities-title { font-size: 2rem; }
+    .dynamic-icon { font-size: 4rem; width: 110px; height: 110px; }
+}
 </style>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 @endsection
 
 @section('scripts')
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-AOS.init({ duration: 1200, once: true });
+    AOS.init({ duration: 1200, once: true });
 </script>
 @endsection

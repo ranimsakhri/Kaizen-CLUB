@@ -128,9 +128,32 @@
     100% {background-position:0% 50%;}
 }
 
-/* ================== TITRES ================== */
-.activities-title { font-size: 2.4rem; font-weight: 800; color: #111827; letter-spacing: 0.5px; }
-.activities-subtitle { font-size: 1rem; color: #9ca3af; margin-top: 6px; }
+/* ================== TITRES – TOUS EN NOIR ================== */
+.activities-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #111827;              /* noir foncé */
+    letter-spacing: 0.5px;
+}
+
+.activities-subtitle {
+    font-size: 1rem;
+    color: #374151;              /* noir moyen au lieu de gris clair */
+    margin-top: 6px;
+}
+
+.card-dashboard h5 {
+    color: #111827;              /* titres des cartes en noir */
+    font-weight: 700;
+}
+
+.table-admin h4 {
+    color: #111827;              /* titre "Vue Administrative" en noir */
+}
+
+.table-admin thead th {
+    color: #ffffff;              /* en-tête table reste blanc (sur fond noir) */
+}
 
 /* ================== BOUTON OR ================== */
 .btn-gold {
@@ -164,7 +187,6 @@
     overflow: hidden;
 }
 .card-dashboard i { color: #d4af37; transition: all 0.4s ease; }
-.card-dashboard h5 { margin-top: 10px; margin-bottom: 10px; font-weight: 700; }
 .card-dashboard p { font-size: 0.95rem; color: #475569; }
 .card-dashboard::before {
     content: '';
@@ -212,10 +234,13 @@
 .table-admin tbody tr:hover {
     background: rgba(212,175,55,0.08);
 }
+.table-admin td, .table-admin th {
+    color: #111827; /* texte du corps en noir */
+}
 
 /* ================== BOUTONS ADMIN ================== */
 .btn-warning { background-color: #fbbf24; border: none; color: #1e293b; }
-.btn-danger { background-color: #ef4444; border: none; color: #fff; }
+.btn-danger { background-color: #ef4444; border: none; color: #fff; }x
 .btn-warning:hover { background-color: #f59e0b; }
 .btn-danger:hover { background-color: #dc2626; }
 

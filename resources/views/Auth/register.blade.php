@@ -15,7 +15,7 @@
 
             <!-- LEFT : BRAND -->
             <div class="col-lg-5 text-center text-lg-start mb-5 mb-lg-0" data-aos="fade-right">
-                <div class="logo-kaizen mb-4">
+                <div class="logo-kaizen mb-4" data-aos="zoom-in">
                     <svg viewBox="0 0 200 200" class="horse-svg">
                         <path d="M100 20
                                  C70 40, 50 80, 55 120
@@ -42,7 +42,6 @@
                         <i class="fas fa-user-plus me-2 text-gold"></i> Inscription
                     </h3>
 
-                    <!-- Erreurs -->
                     @if($errors->any())
                         <div class="alert alert-danger">
                             <ul class="mb-0">
@@ -63,7 +62,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="votre.email@gmail.com" required>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="exemple@gmail.com" required>
                         </div>
 
                         <div class="mb-3">
@@ -128,15 +127,25 @@
 
 .horse-svg {
     width: 130px;
-    stroke: #d4af37;
-    stroke-width: 4;
+    height: 130px;
     fill: none;
+    stroke: #d4af37;
+    stroke-width: 2.4;
+    animation: drawHorse 4.5s ease forwards;
+    margin: 0 auto 20px;
+}
+
+@keyframes drawHorse {
+    from { stroke-dasharray: 600; stroke-dashoffset: 600; }
+    to   { stroke-dashoffset: 0; }
 }
 
 .letter-k {
     fill: #d4af37;
-    font-size: 60px;
-    font-weight: 800;
+    font-family: 'Dancing Script', cursive;
+    font-size: 62px;
+    font-weight: 400;
+    dominant-baseline: middle;
 }
 
 .hero-title {
@@ -172,6 +181,7 @@
     background: rgba(255,255,255,0.15);
     border: none;
     color: #fff;
+    border-radius: 10px;
 }
 
 .register-card .form-control::placeholder {
@@ -197,7 +207,7 @@
 }
 </style>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&family=Dancing+Script:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 @endsection
@@ -211,25 +221,20 @@
         once: true
     });
 
-    // ================= AUTOMATIQUE @gmail.com EN TEMPS RÉEL =================
     document.addEventListener('DOMContentLoaded', function () {
+
+        // Complétion automatique @gmail.com (conservée)
         const emailInput = document.getElementById('email');
-
         emailInput.addEventListener('input', function () {
-            let value = emailInput.value;
-
-            // Si l'utilisateur a déjà un @ → ne rien faire
+            let value = emailInput.value.trim();
             if (value.includes('@')) return;
 
-            // Ajouter automatiquement @gmail.com pour affichage
-            const caretPos = emailInput.selectionStart;
+            const pos = emailInput.selectionStart;
             emailInput.value = value + '@gmail.com';
-
-            // Remettre le curseur avant @ pour continuer à taper
-            if (caretPos <= value.length) {
-                emailInput.setSelectionRange(caretPos, caretPos);
-            }
+            emailInput.setSelectionRange(pos, pos);
         });
+
+        // Plus de toggle password ici
     });
 </script>
 @endsection

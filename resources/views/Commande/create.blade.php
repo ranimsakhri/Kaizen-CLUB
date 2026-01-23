@@ -19,17 +19,25 @@
     100% {background-position:0% 50%;}
 }
 
-/* TITRES */
-.activities-title {
-    font-size: 2.4rem;
+/* TITRES – TOUS EN NOIR SAUF LES NOMS DE PRODUITS */
+.activities-title,
+h2, h4, h5:not(.product-name),
+.form-label,
+.total-box h4 {
+    color: #111827 !important;
     font-weight: 800;
-    color: #111827;
-    letter-spacing: 0.5px;
 }
-.activities-subtitle {
-    font-size: 1rem;
-    color: #9ca3af;
-    margin-top: 6px;
+
+.activities-subtitle,
+.activities-hero p,
+.text-muted,
+.form-check-label {
+    color: #374151 !important;
+}
+
+/* NOMS DE PRODUITS EN DORÉ */
+.product-name {
+    color: #d4af37 !important;
 }
 
 /* INPUTS */
@@ -105,7 +113,11 @@
     justify-content: space-between;
     align-items: center;
 }
+.total-box h4 {
+    margin: 0;
+}
 
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .activities-title { font-size: 2rem; }
 }
@@ -119,7 +131,7 @@
         <!-- Header -->
         <div class="mb-4 text-center">
             <h2 class="activities-title" data-aos="fade-down">
-                <i class="fas fa-shopping-cart me-2"></i> Ajouter une Commande
+                <i class="fas fa-shopping-cart me-2 text-gold"></i> Ajouter une Commande
             </h2>
             <p class="activities-subtitle" data-aos="fade-up">
                 Sélectionnez vos produits et confirmez votre commande
@@ -153,7 +165,7 @@
                 @endphp
 
                 @if($produitsCat->isNotEmpty())
-                    <h4 class="fw-bold mt-4 mb-3" style="color: #d4af37;">
+                    <h4 class="fw-bold mt-4 mb-3">
                         {!! $categorie->icone !!} {{ $categorie->nom }}
                     </h4>
 
@@ -164,7 +176,7 @@
                             @endphp
                             <div class="col-md-6 col-lg-4">
                                 <div class="card-product">
-                                    <h5 class="fw-bold">{{ $produit->nom }}</h5>
+                                    <h5 class="fw-bold product-name">{{ $produit->nom }}</h5>
                                     <p class="text-success fw-bold mb-2">{{ number_format($produit->prix, 2) }} DT</p>
 
                                     <div class="form-check mb-2">
@@ -262,7 +274,7 @@ function initMap() {
     if(map) return;
     map = L.map('map').setView([36.81897, 10.16579], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
+        attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
     if(navigator.geolocation) {
